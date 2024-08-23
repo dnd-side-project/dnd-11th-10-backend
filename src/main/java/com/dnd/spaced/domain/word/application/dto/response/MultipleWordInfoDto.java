@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 public record MultipleWordInfoDto(
         Long id,
         String name,
-        PronunciationInfoDto pronunciationInfo,
         String meaning,
         String category,
         int viewCount,
@@ -19,7 +18,6 @@ public record MultipleWordInfoDto(
         return new MultipleWordInfoDto(
                 word.getId(),
                 word.getName(),
-                new PronunciationInfoDto(word.getPronunciation().getEnglish()),
                 word.getMeaning(),
                 word.getCategory().getName(),
                 word.getViewCount(),
@@ -27,8 +25,5 @@ public record MultipleWordInfoDto(
                 word.getCreatedAt(),
                 word.getUpdatedAt()
         );
-    }
-
-    public record PronunciationInfoDto(String english) {
     }
 }

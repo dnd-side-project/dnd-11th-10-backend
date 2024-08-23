@@ -33,9 +33,6 @@ public record MultipleWordInfoResponse(
             @Schema(description = "용어 이름")
             String name,
 
-            @Schema(description = "용어 발음 정보")
-            PronunciationInfoResponse pronunciationInfo,
-
             @Schema(description = "용어 뜻")
             String meaning,
 
@@ -46,14 +43,10 @@ public record MultipleWordInfoResponse(
             int viewCount
     ) {
 
-        private record PronunciationInfoResponse(@Schema(description = "용어 영어 발음 기호") String english) {
-        }
-
         public static WordInfoResponse from(MultipleWordInfoDto dto) {
             return new WordInfoResponse(
                     dto.id(),
                     dto.name(),
-                    new PronunciationInfoResponse(dto.pronunciationInfo().english()),
                     dto.meaning(),
                     dto.category(),
                     dto.viewCount()
