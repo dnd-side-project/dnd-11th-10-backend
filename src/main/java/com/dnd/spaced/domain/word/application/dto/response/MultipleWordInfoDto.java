@@ -10,6 +10,7 @@ public record MultipleWordInfoDto(
         String category,
         int viewCount,
         String example,
+        int commentCount,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -22,6 +23,7 @@ public record MultipleWordInfoDto(
                 word.getCategory().getName(),
                 word.getViewCount(),
                 word.getExample(),
+                word.getCommentCount(),
                 word.getCreatedAt(),
                 word.getUpdatedAt()
         );
