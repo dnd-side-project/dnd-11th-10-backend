@@ -26,7 +26,7 @@ public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long la
             String meaning,
             String category,
             int viewCount,
-            String example,
+            List<String> examples,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
             Long bookmarkId
@@ -40,7 +40,7 @@ public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long la
                     dto.meaning(),
                     dto.category(),
                     dto.viewCount(),
-                    dto.example(),
+                    dto.examples(),
                     dto.createdAt(),
                     dto.updatedAt(),
                     dto.bookmarkId()

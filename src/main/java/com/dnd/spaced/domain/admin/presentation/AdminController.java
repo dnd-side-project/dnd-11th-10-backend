@@ -4,16 +4,26 @@ import com.dnd.spaced.domain.admin.application.AdminService;
 import com.dnd.spaced.domain.admin.application.dto.request.AdminWordRequestDto;
 import com.dnd.spaced.domain.admin.application.dto.response.ReportInfoDto;
 import com.dnd.spaced.domain.admin.presentation.dto.AdminControllerMapper;
+import com.dnd.spaced.domain.admin.presentation.dto.request.AddWordExampleRequest;
+import com.dnd.spaced.domain.admin.presentation.dto.request.UpdateWordExampleRequest;
 import com.dnd.spaced.domain.admin.presentation.dto.response.AdminWordResponse;
 import com.dnd.spaced.domain.admin.presentation.dto.response.ReportListResponse;
+import com.dnd.spaced.global.controller.ResponseEntityConst;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -69,5 +79,26 @@ public class AdminController implements SwaggerAdminController {
 
         ReportListResponse response = AdminControllerMapper.toReportListResponse(reports, lastReportId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/words/{wordId}/examples/{exampleId}")
+    public ResponseEntity<Void> updateWordExample(
+            @PathVariable Long wordId,
+            @PathVariable Long exampleId,
+            @Valid @RequestBody UpdateWordExampleRequest request
+    ) {
+        adminService.updateWordExample(wordId, exampleId, request.content());
+
+        return ResponseEntityConst.NO_CONTENT;
+    }
+
+    @PostMapping("/words/{wordId}/examples")
+    public ResponseEntity<Void> addWordExample(
+            @PathVariable Long wordId,
+            @Valid @RequestBody AddWordExampleRequest request
+    ) {
+        adminService.addWordExample(wordId, request.content());
+
+        return ResponseEntityConst.NO_CONTENT;
     }
 }

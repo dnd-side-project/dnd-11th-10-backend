@@ -13,13 +13,13 @@ import com.dnd.spaced.domain.report.domain.repository.ReportRepository;
 import com.dnd.spaced.domain.word.application.exception.WordNotFoundException;
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.WordRepository;
-import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AdminService {
 
@@ -64,7 +64,6 @@ public class AdminService {
         deleteReport(reportId);
     }
 
-    @Transactional
     public List<ReportInfoDto> findReports(Long lastReportId) {
         List<Report> reports = reportRepository.findReportsAfterId(lastReportId, PAGE_SIZE);
 
@@ -76,6 +75,20 @@ public class AdminService {
     public AdminWordResponse getWord(Long wordId) {
         Word word = findWordById(wordId);
         return AdminServiceMapper.toResponseDto(word);
+    }
+
+    @Transactional
+    public void updateWordExample(Long wordId, Long wordExampleId, String content) {
+        Word word = findWordById(wordId);
+
+        word.updateWordExample(wordExampleId, content);
+    }
+
+    @Transactional
+    public void addWordExample(Long wordId, String content) {
+        Word word = findWordById(wordId);
+
+        word.addWordExample(content);
     }
 
     private Report getReport(Long reportId) {
@@ -103,4 +116,3 @@ public class AdminService {
         reportRepository.deleteById(reportId);
     }
 }
-

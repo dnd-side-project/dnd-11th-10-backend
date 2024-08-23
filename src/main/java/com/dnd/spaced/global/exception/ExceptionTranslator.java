@@ -200,6 +200,11 @@ public enum ExceptionTranslator {
             HttpStatus.NOT_FOUND,
             ExceptionCode.REPORT_NOT_FOUND,
             "해당 신고를 찾을 수 없습니다."
+    ),
+    WORD_EXAMPLE_NOT_FOUND(
+            HttpStatus.NOT_FOUND,
+            ExceptionCode.WORD_EXAMPLE_NOT_FOUND,
+            "지정한 용여 예문을 찾을 수 없습니다."
     )
     ;
 
