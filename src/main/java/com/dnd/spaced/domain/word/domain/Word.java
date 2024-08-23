@@ -2,6 +2,7 @@ package com.dnd.spaced.domain.word.domain;
 
 import com.dnd.spaced.domain.word.domain.exception.InvalidMeaningException;
 import com.dnd.spaced.domain.word.domain.exception.InvalidNameException;
+import com.dnd.spaced.domain.word.domain.exception.WordExampleNotFoundException;
 import com.dnd.spaced.global.entity.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -82,6 +83,21 @@ public class Word extends BaseTimeEntity {
         this.examples.add(wordExample);
     }
 
+    public void updateWordExample(Long wordExampleId, String content) {
+        WordExample target = this.examples.stream()
+                                          .filter(wordExample -> wordExample.isEqualTo(wordExampleId))
+                                          .findAny()
+                                          .orElseThrow(WordExampleNotFoundException::new);
+
+        target.updateContent(content);
+    }
+
+    public void addWordExample(String content) {
+        WordExample wordExample = WordExample.builder().content(content).build();
+
+        this.examples.add(wordExample);
+    }
+
     public void addComment() {
         this.commentCount++;
     }
@@ -117,8 +133,8 @@ public class Word extends BaseTimeEntity {
     ) {
         this.name = name;
         this.pronunciation = Pronunciation.builder()
-                .english(englishPronunciation)
-                .build();
+                                          .english(englishPronunciation)
+                                          .build();
         this.meaning = meaning;
         this.category = Category.findBy(categoryName);
     }

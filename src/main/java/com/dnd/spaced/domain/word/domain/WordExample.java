@@ -51,8 +51,12 @@ public class WordExample {
         return MIN_EXAMPLE_LENGTH > length || MAX_EXAMPLE_LENGTH < length;
     }
 
-    public void initWord(Word word) {
+    void initWord(Word word) {
         this.word = word;
+    }
+
+    public boolean isEqualTo(Long id) {
+        return this.id.equals(id);
     }
 
     public void updateContent(String content) {
