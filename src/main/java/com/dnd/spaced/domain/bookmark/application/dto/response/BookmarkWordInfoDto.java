@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.bookmark.application.dto.response;
 
 import com.dnd.spaced.domain.bookmark.domain.repository.dto.response.BookmarkWordDto;
+import com.dnd.spaced.domain.word.domain.WordExample;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record BookmarkWordInfoDto(
         Long wordId,
@@ -10,13 +12,15 @@ public record BookmarkWordInfoDto(
         String meaning,
         String category,
         int viewCount,
-        String example,
+        List<String> examples,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         Long bookmarkId
 ) {
 
     public static BookmarkWordInfoDto from(BookmarkWordDto dto) {
+        List<String> examples = dto.examples().stream().map(WordExample::getContent).toList();
+
         return new BookmarkWordInfoDto(
                 dto.wordId(),
                 dto.name(),
@@ -24,7 +28,7 @@ public record BookmarkWordInfoDto(
                 dto.meaning(),
                 dto.category().getName(),
                 dto.viewCount(),
-                dto.example(),
+                examples,
                 dto.createdAt(),
                 dto.updatedAt(),
                 dto.bookmarkId()

@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.word.application.dto.response;
 
+import com.dnd.spaced.domain.word.domain.WordExample;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordInfoWithBookmarkDto;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record DetailWordInfoDto(
         Long id,
@@ -12,13 +14,15 @@ public record DetailWordInfoDto(
         int viewCount,
         int commentCount,
         int bookmarkCount,
-        String example,
+        List<String> examples,
         boolean isMarked,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
 
     public static DetailWordInfoDto from(WordInfoWithBookmarkDto dto) {
+        List<String> examples = dto.examples().stream().map(WordExample::getContent).toList();
+
         return new DetailWordInfoDto(
                 dto.wordId(),
                 dto.name(),
@@ -28,7 +32,7 @@ public record DetailWordInfoDto(
                 dto.viewCount() + 1,
                 dto.commentCount(),
                 dto.bookmarkCount(),
-                dto.example(),
+                examples,
                 dto.bookmarkId() != null,
                 dto.createdAt(),
                 dto.updatedAt()

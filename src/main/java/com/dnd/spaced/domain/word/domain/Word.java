@@ -1,9 +1,9 @@
 package com.dnd.spaced.domain.word.domain;
 
-import com.dnd.spaced.domain.word.domain.exception.InvalidExampleException;
 import com.dnd.spaced.domain.word.domain.exception.InvalidMeaningException;
 import com.dnd.spaced.domain.word.domain.exception.InvalidNameException;
 import com.dnd.spaced.global.entity.BaseTimeEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +11,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -42,7 +45,12 @@ public class Word extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private String example;
+    @OneToMany(
+            mappedBy = "word",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE},
+            orphanRemoval = true
+    )
+    private List<WordExample> examples = new ArrayList<>();
 
     private int viewCount = 0;
 
@@ -58,7 +66,7 @@ public class Word extends BaseTimeEntity {
             String categoryName,
             String example
     ) {
-        validateContent(name, meaning, example);
+        validateContent(name, meaning);
 
         this.name = name;
         this.pronunciation = Pronunciation.builder()
@@ -66,7 +74,12 @@ public class Word extends BaseTimeEntity {
                                           .build();
         this.meaning = meaning;
         this.category = Category.findBy(categoryName);
-        this.example = example;
+
+        WordExample wordExample = WordExample.builder().content(example).build();
+
+        wordExample.initWord(this);
+
+        this.examples.add(wordExample);
     }
 
     public void addComment() {
@@ -77,15 +90,12 @@ public class Word extends BaseTimeEntity {
         this.commentCount--;
     }
 
-    private void validateContent(String name, String meaning, String example) {
+    private void validateContent(String name, String meaning) {
         if (isInvalidName(name)) {
             throw new InvalidNameException();
         }
         if (isInvalidMeaning(meaning)) {
             throw new InvalidMeaningException();
-        }
-        if (isInvalidExample(example)) {
-            throw new InvalidExampleException();
         }
     }
 
@@ -99,19 +109,17 @@ public class Word extends BaseTimeEntity {
         return MIN_MEANING_LENGTH > length || MAX_MEANING_LENGTH < length;
     }
 
-    private boolean isInvalidExample(String example) {
-        int length = example.length();
-
-        return MIN_EXAMPLE_LENGTH > length || MAX_EXAMPLE_LENGTH < length;
-    }
-
-    public void updateDetails(String name, String englishPronunciation, String meaning, String categoryName, String example) {
+    public void updateDetails(
+            String name,
+            String englishPronunciation,
+            String meaning,
+            String categoryName
+    ) {
         this.name = name;
         this.pronunciation = Pronunciation.builder()
                 .english(englishPronunciation)
                 .build();
         this.meaning = meaning;
         this.category = Category.findBy(categoryName);
-        this.example = example;
     }
 }
