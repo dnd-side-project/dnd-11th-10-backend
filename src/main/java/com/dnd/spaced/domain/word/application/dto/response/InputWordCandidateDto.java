@@ -1,6 +1,4 @@
 package com.dnd.spaced.domain.word.application.dto.response;
 
-import java.util.List;
-
-public record InputWordCandidateDto(List<String> candidates) {
+public record InputWordCandidateDto(String name, String category) {
 }

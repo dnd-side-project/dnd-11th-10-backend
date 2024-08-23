@@ -29,8 +29,8 @@ public final class WordControllerMapper {
         return DetailWordInfoResponse.from(dto);
     }
 
-    public static InputWordCandidateResponse to(InputWordCandidateDto dto) {
-        return new InputWordCandidateResponse(dto.candidates());
+    public static InputWordCandidateResponse fromCandidate(List<InputWordCandidateDto> dtos) {
+        return InputWordCandidateResponse.from(dtos);
     }
 
     public static PopularWordResponse from(List<PopularWordInfoDto> dtos) {

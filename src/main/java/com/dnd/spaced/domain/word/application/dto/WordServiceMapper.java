@@ -37,8 +37,10 @@ public final class WordServiceMapper {
         return DetailWordInfoDto.from(dto);
     }
 
-    public static InputWordCandidateDto from(WordCandidateDto dto) {
-        return new InputWordCandidateDto(dto.candidates());
+    public static List<InputWordCandidateDto> fromCandidate(List<WordCandidateDto> dtos) {
+        return dtos.stream()
+                   .map(dto -> new InputWordCandidateDto(dto.name(), dto.category().getName()))
+                   .toList();
     }
 
     public static List<WordSearchInfoDto> toWordSearchResponse(List<Word> words) {
@@ -67,7 +69,6 @@ public final class WordServiceMapper {
         return new WordSearchInfoDto(
                 word.getId(),
                 word.getName(),
-                new WordSearchInfoDto.PronunciationInfo(word.getPronunciation().getEnglish()),
                 word.getMeaning(),
                 word.getCategory().getName(),
                 word.getViewCount(),

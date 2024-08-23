@@ -33,9 +33,6 @@ public record MultipleSearchWordInfoResponse(
             @Schema(description = "용어 이름")
             String name,
 
-            @Schema(description = "용어 발음 정보")
-            PronunciationInfoResponse pronunciationInfo,
-
             @Schema(description = "용어 뜻")
             String meaning,
 
@@ -43,20 +40,20 @@ public record MultipleSearchWordInfoResponse(
             String category,
 
             @Schema(description = "조회수")
-            int viewCount
-    ) {
+            int viewCount,
 
-        private record PronunciationInfoResponse(@Schema(description = "용어 영어 발음 기호") String english) {
-        }
+            @Schema(description = "댓글 수")
+            int commentCount
+    ) {
 
         public static WordSearchInfoResponse from(WordSearchInfoDto dto) {
             return new WordSearchInfoResponse(
                     dto.id(),
                     dto.name(),
-                    new PronunciationInfoResponse(dto.pronunciationInfo().english()),
                     dto.meaning(),
                     dto.category(),
-                    dto.viewCount()
+                    dto.viewCount(),
+                    dto.commentCount()
             );
         }
     }
