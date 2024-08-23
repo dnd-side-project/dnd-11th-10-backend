@@ -1,6 +1,8 @@
 package com.dnd.spaced.domain.admin.presentation;
 
 import com.dnd.spaced.domain.admin.application.dto.request.AdminWordRequestDto;
+import com.dnd.spaced.domain.admin.presentation.dto.request.AddWordExampleRequest;
+import com.dnd.spaced.domain.admin.presentation.dto.request.UpdateWordExampleRequest;
 import com.dnd.spaced.domain.admin.presentation.dto.response.AdminWordResponse;
 import com.dnd.spaced.domain.admin.presentation.dto.response.ReportListResponse;
 import com.dnd.spaced.global.docs.annotation.ExceptionSpec;
@@ -88,5 +90,26 @@ public interface SwaggerAdminController {
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ReportListResponse.class)))
     ResponseEntity<ReportListResponse> findReports(
             @Parameter(description = "마지막으로 조회한 신고 ID", required = false) @RequestParam(required = false) Long lastReportId
+    );
+
+    @Operation(summary = "용어 예문 수정", description = "지정한 용어의 예문 내용을 수정합니다.")
+    @ApiResponse(responseCode = "204", description = "No Content")
+    @ExceptionSpec(values = {
+            ExceptionCode.WORD_EXAMPLE_NOT_FOUND
+    })
+    ResponseEntity<Void> updateWordExample(
+            @Parameter(description = "용어 ID") @PathVariable Long wordId,
+            @Parameter(description = "변경할 예문 ID") @PathVariable Long exampleId,
+            UpdateWordExampleRequest request
+    );
+
+    @Operation(summary = "용어 예문 추가", description = "지정한 용어의 예문을 추가합니다.")
+    @ApiResponse(responseCode = "204", description = "No Content")
+    @ExceptionSpec(values = {
+            ExceptionCode.WORD_EXAMPLE_NOT_FOUND
+    })
+    ResponseEntity<Void> addWordExample(
+            @Parameter(description = "용어 ID") @PathVariable Long wordId,
+            AddWordExampleRequest request
     );
 }
