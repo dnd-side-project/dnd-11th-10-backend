@@ -1,6 +1,5 @@
 package com.dnd.spaced.domain.word.application.dto.response;
 
-import com.dnd.spaced.domain.word.domain.WordExample;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordInfoWithBookmarkDto;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,14 +13,22 @@ public record DetailWordInfoDto(
         int viewCount,
         int commentCount,
         int bookmarkCount,
-        List<String> examples,
+        List<WordExampleInfoDto> examples,
         boolean isMarked,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
 
     public static DetailWordInfoDto from(WordInfoWithBookmarkDto dto) {
-        List<String> examples = dto.examples().stream().map(WordExample::getContent).toList();
+        List<WordExampleInfoDto> examples = dto.examples()
+                                               .stream()
+                                               .map(target ->
+                                                       new WordExampleInfoDto(
+                                                               target.getId(),
+                                                               target.getContent()
+                                                       )
+                                               )
+                                               .toList();
 
         return new DetailWordInfoDto(
                 dto.wordId(),
@@ -40,5 +47,8 @@ public record DetailWordInfoDto(
     }
 
     public record PronunciationInfoDto(String english) {
+    }
+
+    public record WordExampleInfoDto(Long id, String content) {
     }
 }
