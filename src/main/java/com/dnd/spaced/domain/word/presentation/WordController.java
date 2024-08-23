@@ -64,9 +64,9 @@ public class WordController implements SwaggerWordController {
 
     @GetMapping("/candidates")
     public ResponseEntity<InputWordCandidateResponse> findCandidateAllBy(String name) {
-        InputWordCandidateDto result = wordService.findCandidateAllBy(name);
+        List<InputWordCandidateDto> result = wordService.findCandidateAllBy(name);
 
-        return ResponseEntity.ok(WordControllerMapper.to(result));
+        return ResponseEntity.ok(WordControllerMapper.fromCandidate(result));
     }
 
     @GetMapping("/search")

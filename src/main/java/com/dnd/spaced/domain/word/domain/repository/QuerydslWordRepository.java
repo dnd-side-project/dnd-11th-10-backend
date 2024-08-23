@@ -6,7 +6,6 @@ import static com.dnd.spaced.domain.word.domain.QWord.word;
 import com.dnd.spaced.domain.word.domain.Category;
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.exception.InvalidCategoryException;
-import com.dnd.spaced.domain.word.domain.repository.dto.WordRepositoryMapper;
 import com.dnd.spaced.domain.word.domain.repository.dto.request.SearchWordConditionDto;
 import com.dnd.spaced.domain.word.domain.repository.dto.request.WordConditionDto;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordCandidateDto;
@@ -99,13 +98,17 @@ public class QuerydslWordRepository implements WordRepository {
     }
 
     @Override
-    public WordCandidateDto findCandidateAllBy(String target) {
-        List<String> result = queryFactory.select(word.name)
+    public List<WordCandidateDto> findCandidateAllBy(String target) {
+        return queryFactory.select(
+                      Projections.constructor(
+                              WordCandidateDto.class,
+                              word.name,
+                              word.category
+                                 )
+                           )
                 .from(word)
                 .where(word.name.endsWith(target))
                 .fetch();
-
-        return WordRepositoryMapper.to(result);
     }
 
     @Override

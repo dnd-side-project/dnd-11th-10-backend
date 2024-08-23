@@ -20,7 +20,7 @@ public interface WordRepository {
 
     List<Word> findAllBy(WordConditionDto wordConditionDto);
 
-    WordCandidateDto findCandidateAllBy(String target);
+    List<WordCandidateDto> findCandidateAllBy(String target);
 
     void updateViewCount(Long wordId);
 

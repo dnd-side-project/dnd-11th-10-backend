@@ -65,10 +65,10 @@ public class WordService {
         return WordServiceMapper.to(result);
     }
 
-    public InputWordCandidateDto findCandidateAllBy(String target) {
-        WordCandidateDto result = wordRepository.findCandidateAllBy(target);
+    public List<InputWordCandidateDto> findCandidateAllBy(String target) {
+        List<WordCandidateDto> result = wordRepository.findCandidateAllBy(target);
 
-        return WordServiceMapper.from(result);
+        return WordServiceMapper.fromCandidate(result);
     }
 
     public List<WordSearchInfoDto> search(SearchWordConditionInfoDto dto) {
