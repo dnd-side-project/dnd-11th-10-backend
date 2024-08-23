@@ -67,7 +67,6 @@ public final class WordServiceMapper {
         return new WordSearchInfoDto(
                 word.getId(),
                 word.getName(),
-                new WordSearchInfoDto.PronunciationInfo(word.getPronunciation().getEnglish()),
                 word.getMeaning(),
                 word.getCategory().getName(),
                 word.getViewCount(),
