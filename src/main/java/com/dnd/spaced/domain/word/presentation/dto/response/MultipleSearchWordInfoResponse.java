@@ -40,7 +40,10 @@ public record MultipleSearchWordInfoResponse(
             String category,
 
             @Schema(description = "조회수")
-            int viewCount
+            int viewCount,
+
+            @Schema(description = "댓글 수")
+            int commentCount
     ) {
 
         public static WordSearchInfoResponse from(WordSearchInfoDto dto) {
@@ -49,7 +52,8 @@ public record MultipleSearchWordInfoResponse(
                     dto.name(),
                     dto.meaning(),
                     dto.category(),
-                    dto.viewCount()
+                    dto.viewCount(),
+                    dto.commentCount()
             );
         }
     }
