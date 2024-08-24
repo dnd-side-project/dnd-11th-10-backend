@@ -9,12 +9,14 @@ import com.dnd.spaced.domain.admin.presentation.dto.request.UpdateWordExampleReq
 import com.dnd.spaced.domain.admin.presentation.dto.response.AdminWordResponse;
 import com.dnd.spaced.domain.admin.presentation.dto.response.ReportListResponse;
 import com.dnd.spaced.global.controller.ResponseEntityConst;
+import com.dnd.spaced.global.resolver.auth.AuthAccount;
+import com.dnd.spaced.global.resolver.auth.AuthAccountInfo;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,56 +35,76 @@ public class AdminController implements SwaggerAdminController {
 
     private final AdminService adminService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/words")
-    public ResponseEntity<Void> createWord(Authentication authentication,
-                                           @Valid @RequestBody AdminWordRequestDto wordRequestDto) {
+    public ResponseEntity<Void> createWord(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @Valid @RequestBody AdminWordRequestDto wordRequestDto) {
         Long wordId = adminService.createWord(wordRequestDto);
         return ResponseEntity.created(URI.create("/words/" + wordId)).build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/words/{id}")
-    public ResponseEntity<Void> deleteWord(Authentication authentication,
-                                           @PathVariable Long id) {
+    public ResponseEntity<Void> deleteWord(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @PathVariable Long id) {
         adminService.deleteWord(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/words/{id}")
-    public ResponseEntity<Void> updateWord(Authentication authentication,
-                                           @PathVariable Long id,
-                                           @Valid @RequestBody AdminWordRequestDto wordRequestDto) {
+    public ResponseEntity<Void> updateWord(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @PathVariable Long id,
+            @Valid @RequestBody AdminWordRequestDto wordRequestDto) {
         adminService.updateWord(id, wordRequestDto);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/words/{id}")
-    public ResponseEntity<AdminWordResponse> getWord(@PathVariable Long id) {
+    public ResponseEntity<AdminWordResponse> getWord(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @PathVariable Long id) {
         AdminWordResponse wordResponseDto = adminService.getWord(id);
         return ResponseEntity.ok(wordResponseDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/reports/{id}/accept")
-    public ResponseEntity<Void> acceptReport(@PathVariable Long id) {
+    public ResponseEntity<Void> acceptReport(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @PathVariable Long id) {
         adminService.acceptReport(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/reports/{id}/ignore")
-    public ResponseEntity<Void> ignoreReport(@PathVariable Long id) {
+    public ResponseEntity<Void> ignoreReport(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @PathVariable Long id) {
         adminService.ignoreReport(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/reports")
-    public ResponseEntity<ReportListResponse> findReports(@RequestParam(required = false) Long lastReportId) {
+    public ResponseEntity<ReportListResponse> findReports(
+            @AuthAccount AuthAccountInfo accountInfo,
+            @RequestParam(required = false) Long lastReportId) {
         List<ReportInfoDto> reports = adminService.findReports(lastReportId);
 
         ReportListResponse response = AdminControllerMapper.toReportListResponse(reports, lastReportId);
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/words/{wordId}/examples/{exampleId}")
     public ResponseEntity<Void> updateWordExample(
+            @AuthAccount AuthAccountInfo accountInfo,
             @PathVariable Long wordId,
             @PathVariable Long exampleId,
             @Valid @RequestBody UpdateWordExampleRequest request
@@ -92,8 +114,10 @@ public class AdminController implements SwaggerAdminController {
         return ResponseEntityConst.NO_CONTENT;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/words/{wordId}/examples")
     public ResponseEntity<Void> addWordExample(
+            @AuthAccount AuthAccountInfo accountInfo,
             @PathVariable Long wordId,
             @Valid @RequestBody AddWordExampleRequest request
     ) {
