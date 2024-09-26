@@ -79,11 +79,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = tokenEncoder.encode(LocalDateTime.now(), TokenType.ACCESS, claims);
         String refreshToken = tokenEncoder.encode(LocalDateTime.now(), TokenType.REFRESH, claims);
 
-        writeResponse(response, accessToken, isSignUp, account.getRole().name());
+        writeResponse(response, accessToken, isSignUp, account.getRole().name(), account.getId());
         createRefreshTokenCookie(response, refreshToken);
     }
 
-    private void writeResponse(HttpServletResponse response, String accessToken, boolean isSignUp, String role) {
+    private void writeResponse(HttpServletResponse response, String accessToken, boolean isSignUp, String role, Long id) {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
@@ -92,12 +92,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .queryParam("accessToken", accessToken)
                     .queryParam("isSignUp", isSignUp)
                     .queryParam("role", role)
+                    .queryParam("id", id)
                     .build().toUriString();
 
             response.sendRedirect(redirectUrl);
             PrintWriter writer = response.getWriter();
 
-            writer.println(objectMapper.writeValueAsString(new LoginResponse(accessToken, isSignUp, role)));
+            writer.println(objectMapper.writeValueAsString(new LoginResponse(accessToken, isSignUp, role, id)));
             writer.flush();
         } catch (IOException e) {
             throw new InvalidResponseWriteException();
