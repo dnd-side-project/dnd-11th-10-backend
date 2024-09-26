@@ -7,8 +7,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,19 +28,19 @@ public class OAuth2AuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         extractToken(request).map(oAuth2UserDetailsService::loadUserByUsername)
-                             .ifPresent(this::setAuthentication);
+                .ifPresent(this::setAuthentication);
 
         filterChain.doFilter(request, response);
     }
 
     private void setAuthentication(OAuth2UserDetails oAuth2UserDetails) {
         SecurityContextHolder.getContext()
-                             .setAuthentication(
-                                     new OAuth2AuthenticationToken(
-                                             oAuth2UserDetails,
-                                             oAuth2UserDetails.getAuthorities()
-                                     )
-                             );
+                .setAuthentication(
+                        new OAuth2AuthenticationToken(
+                                oAuth2UserDetails,
+                                oAuth2UserDetails.getAuthorities()
+                        )
+                );
     }
 
     private Optional<String> extractToken(HttpServletRequest request) {

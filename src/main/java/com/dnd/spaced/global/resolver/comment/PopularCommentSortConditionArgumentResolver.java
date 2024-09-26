@@ -20,7 +20,7 @@ public class PopularCommentSortConditionArgumentResolver implements HandlerMetho
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(PopularCommentSortCondition.class) && parameter.getParameterType()
-                                                                                               .equals(Pageable.class);
+                .equals(Pageable.class);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class PopularCommentSortConditionArgumentResolver implements HandlerMetho
             WebDataBinderFactory binderFactory
     ) {
         return PageRequest.of(IGNORED_PAGE, DEFAULT_SIZE)
-                          .withSort(Direction.DESC, DEFAULT_SORT_BY);
+                .withSort(Direction.DESC, DEFAULT_SORT_BY);
     }
 }

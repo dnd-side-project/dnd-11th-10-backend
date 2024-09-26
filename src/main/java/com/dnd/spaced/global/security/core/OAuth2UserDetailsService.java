@@ -3,7 +3,9 @@ package com.dnd.spaced.global.security.core;
 import com.dnd.spaced.domain.auth.domain.TokenDecoder;
 import com.dnd.spaced.domain.auth.domain.TokenType;
 import com.dnd.spaced.domain.auth.infrastructure.PrivateClaims;
+
 import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;

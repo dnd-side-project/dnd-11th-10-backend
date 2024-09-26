@@ -3,7 +3,9 @@ package com.dnd.spaced.global.security.core;
 import com.dnd.spaced.domain.account.domain.Role;
 import com.dnd.spaced.global.security.attribute.AbstractOAuth2Attribute;
 import com.dnd.spaced.global.security.attribute.OAuth2AttributeConverter;
+
 import java.util.Collections;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,11 +19,11 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String type = userRequest.getClientRegistration()
-                                 .getRegistrationId();
+                .getRegistrationId();
         String attributeKey = userRequest.getClientRegistration()
-                                         .getProviderDetails()
-                                         .getUserInfoEndpoint()
-                                         .getUserNameAttributeName();
+                .getProviderDetails()
+                .getUserInfoEndpoint()
+                .getUserNameAttributeName();
         AbstractOAuth2Attribute oAuth2Attribute = OAuth2AttributeConverter.convert(
                 type,
                 oAuth2User.getAttributes(),

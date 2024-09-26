@@ -18,7 +18,7 @@ public class AuthAccountInfoArgumentResolver implements HandlerMethodArgumentRes
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(AuthAccount.class) && parameter.getParameterType()
-                                                                               .equals(AuthAccountInfo.class);
+                .equals(AuthAccountInfo.class);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AuthAccountInfoArgumentResolver implements HandlerMethodArgumentRes
 
     private boolean isRequired(MethodParameter parameter) {
         return parameter.getParameterAnnotation(AuthAccount.class)
-                        .required();
+                .required();
     }
 
     private boolean isInvalidAccountPrincipal(AuthAccountInfo accountInfo) {

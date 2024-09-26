@@ -20,7 +20,7 @@ public class CommentSortConditionArgumentResolver implements HandlerMethodArgume
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(CommentSortCondition.class) && parameter.getParameterType()
-                                                                                        .equals(Pageable.class);
+                .equals(Pageable.class);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CommentSortConditionArgumentResolver implements HandlerMethodArgume
         int size = findSize(webRequest.getParameter("size"));
 
         return PageRequest.of(IGNORED_PAGE, size)
-                          .withSort(sortOrder, sortBy);
+                .withSort(sortOrder, sortBy);
     }
 
     private String findSortBy(String target) {

@@ -1,6 +1,7 @@
 package com.dnd.spaced.global.security.attribute;
 
 import java.util.Map;
+
 import lombok.Builder;
 
 public class GoogleOAuth2Attribute extends AbstractOAuth2Attribute {

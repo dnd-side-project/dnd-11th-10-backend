@@ -23,10 +23,12 @@ import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,12 +65,12 @@ public class DocsConfig {
                         .description("OAuth2 로그인 API")
                         .tags(List.of("OAuth2 관련 API"))
                         .addParametersItem(new Parameter().name("providerType")
-                                                          .description("OAuth2 Provider 식별자")
-                                                          .required(true)
-                                                          .in("path")
-                                                          .schema(new StringSchema()._default("google")
-                                                                                    .addEnumItem("google")
-                                                          )
+                                .description("OAuth2 Provider 식별자")
+                                .required(true)
+                                .in("path")
+                                .schema(new StringSchema()._default("google")
+                                        .addEnumItem("google")
+                                )
                         )
                         .responses(new ApiResponses()
                                 .addApiResponse("302", new ApiResponse().description("OAuth 동의 화면으로 리다이렉션"))
@@ -105,11 +107,11 @@ public class DocsConfig {
                 Parameter commonHeader = new Parameter();
 
                 commonHeader.in("header")
-                            .name("Authorization")
-                            .description("access token 헤더, Bearer 타입만 허용")
-                            .required(isNotRequiredHeader(handlerMethod))
-                            .schema(new StringSchema())
-                            .example("Bearer <access-token-value>");
+                        .name("Authorization")
+                        .description("access token 헤더, Bearer 타입만 허용")
+                        .required(isNotRequiredHeader(handlerMethod))
+                        .schema(new StringSchema())
+                        .example("Bearer <access-token-value>");
                 operation.addParametersItem(commonHeader);
             }
             return operation;
