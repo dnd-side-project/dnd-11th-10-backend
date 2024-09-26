@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.image.application;
 
 import com.dnd.spaced.global.config.properties.ImageStorePathProperties;
+
 import java.net.MalformedURLException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

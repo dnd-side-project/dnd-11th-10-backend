@@ -18,8 +18,10 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -127,9 +129,9 @@ public class QuerydslWordRepository implements WordRepository {
     @Override
     public void updateBookmarkCount(Long wordId, int count) {
         queryFactory.update(word)
-                    .set(word.bookmarkCount, word.bookmarkCount.add(count))
-                    .where(word.id.eq(wordId))
-                    .execute();
+                .set(word.bookmarkCount, word.bookmarkCount.add(count))
+                .where(word.id.eq(wordId))
+                .execute();
     }
 
     @Override
@@ -232,8 +234,8 @@ public class QuerydslWordRepository implements WordRepository {
 
     private Order findOrder(Pageable pageable) {
         return pageable.getSort()
-                       .get()
-                       .findAny()
-                       .orElse(null);
+                .get()
+                .findAny()
+                .orElse(null);
     }
 }

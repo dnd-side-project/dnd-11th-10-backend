@@ -8,8 +8,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +32,7 @@ public class JwtDecoder implements TokenDecoder {
         validateBearerToken(token);
 
         return this.parse(tokenType, token)
-                   .map(this::convert);
+                .map(this::convert);
     }
 
     private void validateBearerToken(String token) {
@@ -55,10 +57,10 @@ public class JwtDecoder implements TokenDecoder {
         try {
             return Optional.of(
                     Jwts.parserBuilder()
-                        .setSigningKey(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)))
-                        .build()
-                        .parseClaimsJws(findPureToken(token))
-                        .getBody()
+                            .setSigningKey(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)))
+                            .build()
+                            .parseClaimsJws(findPureToken(token))
+                            .getBody()
             );
         } catch (JwtException ignored) {
             return Optional.empty();

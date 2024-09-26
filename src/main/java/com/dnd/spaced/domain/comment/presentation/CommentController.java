@@ -27,8 +27,10 @@ import com.dnd.spaced.global.resolver.comment.LikedCommentSortCondition;
 import com.dnd.spaced.global.resolver.comment.PopularCommentSortCondition;
 import com.dnd.spaced.global.resolver.comment.WrittenCommentSortCondition;
 import jakarta.validation.Valid;
+
 import java.net.URI;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +58,7 @@ public class CommentController implements SwaggerCommentController {
         commentService.save(CommentServiceMapper.ofCreate(accountInfo.email(), wordId, request.content()));
 
         return ResponseEntity.created(URI.create("/words" + wordId))
-                             .build();
+                .build();
     }
 
     @PutMapping("/comments/{commentId}")

@@ -1,6 +1,7 @@
 package com.dnd.spaced.domain.bookmark.application.dto.response;
 
 import com.dnd.spaced.domain.bookmark.domain.repository.dto.response.BookmarkWordDto;
+
 import java.time.LocalDateTime;
 
 public record BookmarkWordInfoDto(

@@ -29,7 +29,9 @@ import com.dnd.spaced.domain.comment.domain.repository.dto.response.PopularComme
 import com.dnd.spaced.domain.comment.domain.repository.dto.response.PopularCommentWithoutIsLikeDto;
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.WordRepository;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -52,10 +54,10 @@ public class CommentService {
         Account writer = findAccount(dto.email());
         Word word = findWord(dto.wordId());
         Comment comment = Comment.builder()
-                                 .accountId(writer.getId())
-                                 .wordId(word.getId())
-                                 .content(dto.content())
-                                 .build();
+                .accountId(writer.getId())
+                .wordId(word.getId())
+                .content(dto.content())
+                .build();
 
         word.addComment();
         commentRepository.save(comment);
@@ -95,21 +97,21 @@ public class CommentService {
         Comment comment = findComment(commentId);
 
         likeRepository.findBy(account.getId(), comment.getWordId())
-                      .ifPresentOrElse(
-                              like -> {
-                                  likeRepository.delete(like);
-                                  comment.dislike();
-                              },
-                              () -> {
-                                  Like like = Like.builder()
-                                                  .accountId(account.getId())
-                                                  .commentId(comment.getId())
-                                                  .build();
+                .ifPresentOrElse(
+                        like -> {
+                            likeRepository.delete(like);
+                            comment.dislike();
+                        },
+                        () -> {
+                            Like like = Like.builder()
+                                    .accountId(account.getId())
+                                    .commentId(comment.getId())
+                                    .build();
 
-                                  likeRepository.save(like);
-                                  comment.like();
-                              }
-                      );
+                            likeRepository.save(like);
+                            comment.like();
+                        }
+                );
     }
 
     public List<MultipleCommentInfoDto> findAllBy(CommentConditionInfoDto dto) {
@@ -196,22 +198,22 @@ public class CommentService {
 
     private Long findAccountId(String email) {
         return accountRepository.findBy(email)
-                                .map(Account::getId)
-                                .orElse(UNAUTHORIZED_ACCOUNT_ID);
+                .map(Account::getId)
+                .orElse(UNAUTHORIZED_ACCOUNT_ID);
     }
 
     private Account findAccount(String email) {
         return accountRepository.findBy(email)
-                                .orElseThrow(UnauthorizedCommentException::new);
+                .orElseThrow(UnauthorizedCommentException::new);
     }
 
     private Word findWord(Long wordId) {
         return wordRepository.findBy(wordId)
-                                  .orElseThrow(CommentWordNotFoundException::new);
+                .orElseThrow(CommentWordNotFoundException::new);
     }
 
     private Comment findComment(Long commentId) {
         return commentRepository.findBy(commentId)
-                                .orElseThrow(CommentNotFoundException::new);
+                .orElseThrow(CommentNotFoundException::new);
     }
 }

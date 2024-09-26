@@ -20,7 +20,7 @@ import static com.dnd.spaced.domain.word.domain.QWord.word;
 
 @Repository
 @RequiredArgsConstructor
-public class QuerydslAdminRepository implements AdminRepository{
+public class QuerydslAdminRepository implements AdminRepository {
 
     private static final String SORT_CONDITION = "name";
     private static final String IGNORE_CATEGORY = "전체 실무";

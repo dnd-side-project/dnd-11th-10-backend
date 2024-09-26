@@ -6,12 +6,14 @@ import com.dnd.spaced.global.config.properties.TokenProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,19 +32,19 @@ public class JwtEncoder implements TokenEncoder {
         Long expiredMillisSeconds = tokenProperties.findExpiredMillisSeconds(tokenType);
 
         return BEARER_TOKEN_PREFIX + Jwts.builder()
-                                         .setIssuedAt(targetDate)
-                                         .setExpiration(new Date(targetDate.getTime() + expiredMillisSeconds))
-                                         .addClaims(attributes)
-                                         .signWith(
-                                                 Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)),
-                                                 SignatureAlgorithm.HS256
-                                         )
-                                         .compact();
+                .setIssuedAt(targetDate)
+                .setExpiration(new Date(targetDate.getTime() + expiredMillisSeconds))
+                .addClaims(attributes)
+                .signWith(
+                        Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)),
+                        SignatureAlgorithm.HS256
+                )
+                .compact();
     }
 
     private Date convertDate(LocalDateTime target) {
         Instant targetInstant = target.atZone(ZoneId.systemDefault())
-                                      .toInstant();
+                .toInstant();
 
         return Date.from(targetInstant);
     }

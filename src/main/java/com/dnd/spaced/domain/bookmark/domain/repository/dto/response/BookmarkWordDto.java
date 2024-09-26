@@ -2,6 +2,7 @@ package com.dnd.spaced.domain.bookmark.domain.repository.dto.response;
 
 import com.dnd.spaced.domain.word.domain.Category;
 import com.dnd.spaced.domain.word.domain.Pronunciation;
+
 import java.time.LocalDateTime;
 
 public record BookmarkWordDto(

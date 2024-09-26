@@ -1,4 +1,4 @@
- package com.dnd.spaced.domain.admin.application;
+package com.dnd.spaced.domain.admin.application;
 
 import com.dnd.spaced.domain.admin.application.dto.request.AdminWordConditionInfoDto;
 import com.dnd.spaced.domain.admin.application.dto.request.AdminWordRequestDto;
@@ -10,18 +10,19 @@ import com.dnd.spaced.domain.word.domain.Word;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminServiceMapper {
 
-     public static AdminWordConditionInfoDto to(
-             String categoryName,
-             String lastWordName,
-             Pageable pageable
-     ) {
-         return new AdminWordConditionInfoDto(categoryName, lastWordName, pageable);
-     }
+    public static AdminWordConditionInfoDto to(
+            String categoryName,
+            String lastWordName,
+            Pageable pageable
+    ) {
+        return new AdminWordConditionInfoDto(categoryName, lastWordName, pageable);
+    }
 
     public static List<AdminWordResponse> toAdminWordResponseList(List<Word> words) {
         return words.stream()

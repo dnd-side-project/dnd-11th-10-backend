@@ -21,17 +21,17 @@ public class ReportService {
 
     public void save(ReportInfoDto dto) {
         Account reporter = accountRepository.findBy(dto.email())
-                                            .orElseThrow(ForbiddenReportAccountException::new);
+                .orElseThrow(ForbiddenReportAccountException::new);
 
         if (commentRepository.existsBy(dto.commentId())) {
             throw new ReportedCommentNotFoundException();
         }
 
         Report report = Report.builder()
-                             .commentId(dto.commentId())
-                             .reporterId(reporter.getId())
-                             .reasonName(dto.reasonName())
-                             .build();
+                .commentId(dto.commentId())
+                .reporterId(reporter.getId())
+                .reasonName(dto.reasonName())
+                .build();
 
         reportRepository.save(report);
     }

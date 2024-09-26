@@ -9,7 +9,9 @@ import com.dnd.spaced.domain.comment.presentation.dto.response.MultipleCommentIn
 import com.dnd.spaced.domain.comment.presentation.dto.response.MultiplePopularCommentInfoResponse;
 import com.dnd.spaced.domain.comment.presentation.dto.response.WrittenCommentResponse;
 import com.dnd.spaced.global.config.properties.UrlProperties;
+
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

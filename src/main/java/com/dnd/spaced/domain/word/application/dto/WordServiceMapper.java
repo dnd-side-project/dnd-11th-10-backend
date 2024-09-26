@@ -11,7 +11,9 @@ import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordCandidateDto;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordInfoWithBookmarkDto;
 import com.dnd.spaced.domain.word.presentation.dto.request.WordSearchRequest;
+
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +31,8 @@ public final class WordServiceMapper {
 
     public static List<ListWordInfoDto> to(List<Word> words) {
         return words.stream()
-                    .map(ListWordInfoDto::from)
-                    .toList();
+                .map(ListWordInfoDto::from)
+                .toList();
     }
 
     public static DetailWordInfoDto to(WordInfoWithBookmarkDto dto) {
@@ -47,8 +49,8 @@ public final class WordServiceMapper {
 
     public static List<WordSearchInfoDto> toWordSearchResponse(List<Word> words) {
         return words.stream()
-                    .map(WordServiceMapper::toWordSearchInfoResponse)
-                    .toList();
+                .map(WordServiceMapper::toWordSearchInfoResponse)
+                .toList();
     }
 
     public static SearchWordConditionInfoDto of(WordSearchRequest request, Pageable pageable) {
@@ -63,8 +65,8 @@ public final class WordServiceMapper {
 
     public static List<PopularWordInfoDto> from(List<Word> words) {
         return words.stream()
-                    .map(word -> new PopularWordInfoDto(word.getId(), word.getName()))
-                    .toList();
+                .map(word -> new PopularWordInfoDto(word.getId(), word.getName()))
+                .toList();
     }
 
     private static WordSearchInfoDto toWordSearchInfoResponse(Word word) {

@@ -29,4 +29,5 @@ public record AdminWordResponse(
 
         @Schema(description = "출처")
         String resource
-) {}
+) {
+}

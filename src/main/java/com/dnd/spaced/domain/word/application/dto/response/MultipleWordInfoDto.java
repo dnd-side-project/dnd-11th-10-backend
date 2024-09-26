@@ -1,6 +1,7 @@
 package com.dnd.spaced.domain.word.application.dto.response;
 
 import com.dnd.spaced.domain.word.domain.Word;
+
 import java.time.LocalDateTime;
 
 public record MultipleWordInfoDto(

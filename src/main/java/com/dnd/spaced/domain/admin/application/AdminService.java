@@ -35,11 +35,7 @@ public class AdminService {
     private final AdminRepository adminRepository;
 
     public List<AdminWordResponse> findAllBy(AdminWordConditionInfoDto dto) {
-        AdminWordConditionDto adminWordConditionDto = AdminRepositoryMapper.to(
-                dto.categoryName(),
-                dto.lastWordName(),
-                dto.pageable()
-        );
+        AdminWordConditionDto adminWordConditionDto = AdminRepositoryMapper.to(dto.categoryName(), dto.lastWordName(), dto.pageable());
         List<Word> result = adminRepository.findAllBy(adminWordConditionDto);
 
         return AdminServiceMapper.toAdminWordResponseList(result);
@@ -84,9 +80,7 @@ public class AdminService {
     public List<ReportInfoDto> findReports(Long lastReportId) {
         List<Report> reports = reportRepository.findReportsAfterId(lastReportId, PAGE_SIZE);
 
-        return reports.stream()
-                .map(AdminServiceMapper::toReportInfoDto)
-                .toList();
+        return reports.stream().map(AdminServiceMapper::toReportInfoDto).toList();
     }
 
     public AdminWordResponse getWord(Long wordId) {
@@ -95,18 +89,15 @@ public class AdminService {
     }
 
     private Report getReport(Long reportId) {
-        return reportRepository.findById(reportId)
-                .orElseThrow(ReportedCommentNotFoundException::new);
+        return reportRepository.findById(reportId).orElseThrow(ReportedCommentNotFoundException::new);
     }
 
     private Comment getComment(Long commentId) {
-        return commentRepository.findBy(commentId)
-                .orElseThrow(CommentNotFoundException::new);
+        return commentRepository.findBy(commentId).orElseThrow(CommentNotFoundException::new);
     }
 
     private Word findWordById(Long wordId) {
-        return wordRepository.findBy(wordId)
-                .orElseThrow(WordNotFoundException::new);
+        return wordRepository.findBy(wordId).orElseThrow(WordNotFoundException::new);
     }
 
     private void validateReportExists(Long reportId) {

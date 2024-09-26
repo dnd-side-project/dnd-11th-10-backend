@@ -14,7 +14,9 @@ import com.dnd.spaced.global.security.handler.OAuth2SuccessHandler;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.server.Cookie.SameSite;
 import org.springframework.http.HttpCookie;
@@ -48,16 +50,16 @@ public class AuthController implements SwaggerAuthController {
         String refreshToken = findRefreshToken(request.getCookies()).orElseThrow(RefreshTokenNotFoundException::new);
         TokenDto tokenDto = authService.refreshToken(refreshToken);
         HttpCookie cookie = ResponseCookie.from(OAuth2SuccessHandler.REFRESH_TOKEN_KEY, tokenDto.refreshToken())
-                                          .httpOnly(true)
-                                          .secure(true)
-                                          .sameSite(SameSite.NONE.name())
-                                          .maxAge(tokenProperties.refreshExpiredSeconds())
-                                          .path(OAuth2SuccessHandler.DOMAIN)
-                                          .build();
+                .httpOnly(true)
+                .secure(true)
+                .sameSite(SameSite.NONE.name())
+                .maxAge(tokenProperties.refreshExpiredSeconds())
+                .path(OAuth2SuccessHandler.DOMAIN)
+                .build();
 
         return ResponseEntity.ok()
-                             .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                             .body(AuthControllerMapper.from(tokenDto));
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(AuthControllerMapper.from(tokenDto));
     }
 
     @DeleteMapping("/withdrawal")

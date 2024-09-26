@@ -2,6 +2,7 @@ package com.dnd.spaced.domain.word.application.dto.response;
 
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordInfoWithBookmarkDto;
+
 import java.time.LocalDateTime;
 
 public record DetailWordInfoDto(

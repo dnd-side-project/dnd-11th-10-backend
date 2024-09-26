@@ -21,4 +21,5 @@ public record AdminWordRequestDto(
 
         @Schema(description = "등록할 용어 출처")
         String resource
-) {}
+) {
+}

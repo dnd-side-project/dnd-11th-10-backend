@@ -44,6 +44,7 @@ public class SkillService {
 
     /**
      * 유저의 카테고리별 스킬 점수를 계산하고 반환.
+     *
      * @param info 유저 정보
      * @return 카테고리별 스킬 점수 응답
      */
@@ -51,17 +52,17 @@ public class SkillService {
         List<Skill> skills = skillRepository.findByEmail(info.email());
         Map<Category, SkillTotalScoreResponse> response = new HashMap<>();
 
-        int sum=0;
+        int sum = 0;
 
         for (Skill skill : skills) {
             Long totalCount = calculateTotalScore(skill);
-            sum+=totalCount;
+            sum += totalCount;
             response.put(skill.getCategory(), createSkillTotalScoreResponse(skill, totalCount));
         }
 
-        sum/=3;
+        sum /= 3;
 
-        SkillTotalResponse totalResponse= SkillTotalResponse.builder()
+        SkillTotalResponse totalResponse = SkillTotalResponse.builder()
                 .totalAvgResponse(sum)
                 .skillTotalScoreResponse(response)
                 .build();
@@ -71,6 +72,7 @@ public class SkillService {
 
     /**
      * 유저의 총점에 따라 상위 몇 퍼센트인지 계산.
+     *
      * @param info 유저 정보
      * @return 유저의 상위 퍼센트
      */
@@ -88,6 +90,7 @@ public class SkillService {
 
     /**
      * 개별 스킬의 정답 비율을 계산하는 메서드.
+     *
      * @param skill 스킬 정보
      * @return 정답 비율 (총점)
      */
@@ -97,7 +100,8 @@ public class SkillService {
 
     /**
      * 스킬 응답을 생성하는 메서드.
-     * @param skill 스킬 정보
+     *
+     * @param skill      스킬 정보
      * @param totalCount 계산된 총점
      * @return 카테고리별 스킬 응답 DTO
      */
@@ -111,6 +115,7 @@ public class SkillService {
 
     /**
      * 전체 유저의 평균 스킬 점수를 계산하는 메서드.
+     *
      * @return 평균 스킬 점수
      */
     private Long calculateAveragePeopleScore() {

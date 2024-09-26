@@ -5,6 +5,5 @@ import org.springframework.data.domain.Pageable;
 public record AdminWordConditionInfoDto(
         String categoryName,
         String lastWordName,
-        Pageable pageable)
-{
+        Pageable pageable) {
 }

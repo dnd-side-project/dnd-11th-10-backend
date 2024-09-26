@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = false, of ="id")
+@EqualsAndHashCode(callSuper = false, of = "id")
 public class Like {
 
     @Id

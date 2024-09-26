@@ -1,6 +1,7 @@
 package com.dnd.spaced.domain.bookmark.presentation.dto.response;
 
 import com.dnd.spaced.domain.bookmark.application.dto.response.BookmarkWordInfoDto;
+
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -13,8 +14,8 @@ public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long la
         }
 
         List<BookmarkWordInfoResponse> words = dtos.stream()
-                                                   .map(BookmarkWordInfoResponse::from)
-                                                   .toList();
+                .map(BookmarkWordInfoResponse::from)
+                .toList();
 
         return new BookmarkWordResponse(words, words.get(words.size() - 1).bookmarkId());
     }

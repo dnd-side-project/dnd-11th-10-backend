@@ -14,7 +14,9 @@ import com.dnd.spaced.domain.word.application.exception.ForbiddenBookmarkExcepti
 import com.dnd.spaced.domain.word.application.exception.WordNotFoundException;
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.WordRepository;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,17 +38,17 @@ public class BookmarkService {
         Word word = wordRepository.findBy(wordId).orElseThrow(WordNotFoundException::new);
 
         bookmarkRepository.findBy(account.getId(), word.getId())
-                          .ifPresentOrElse(
-                                  this::processDeleteBookmark,
-                                  () -> processAddBookmark(account.getId(), wordId)
-                          );
+                .ifPresentOrElse(
+                        this::processDeleteBookmark,
+                        () -> processAddBookmark(account.getId(), wordId)
+                );
     }
 
     private void processAddBookmark(Long accountId, Long wordId) {
         Bookmark bookmark = Bookmark.builder()
-                                    .accountId(accountId)
-                                    .wordId(wordId)
-                                    .build();
+                .accountId(accountId)
+                .wordId(wordId)
+                .build();
 
         bookmarkRepository.save(bookmark);
         wordRepository.updateBookmarkCount(bookmark.getWordId(), ADD_BOOKMARK_COUNT);
@@ -71,6 +73,6 @@ public class BookmarkService {
 
     private Account findAccount(String email) {
         return accountRepository.findBy(email)
-                                .orElseThrow(ForbiddenBookmarkException::new);
+                .orElseThrow(ForbiddenBookmarkException::new);
     }
 }

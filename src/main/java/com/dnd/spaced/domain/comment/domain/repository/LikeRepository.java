@@ -1,6 +1,7 @@
 package com.dnd.spaced.domain.comment.domain.repository;
 
 import com.dnd.spaced.domain.comment.domain.Like;
+
 import java.util.Optional;
 
 public interface LikeRepository {

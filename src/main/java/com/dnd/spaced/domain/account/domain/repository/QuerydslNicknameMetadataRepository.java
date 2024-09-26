@@ -5,7 +5,9 @@ import static com.dnd.spaced.domain.account.domain.QNicknameMetadata.nicknameMet
 import com.dnd.spaced.domain.account.domain.NicknameMetadata;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.LockModeType;
+
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,9 +27,9 @@ public class QuerydslNicknameMetadataRepository implements NicknameMetadataRepos
     @Override
     public Optional<NicknameMetadata> findBy(String nickname) {
         NicknameMetadata result = queryFactory.selectFrom(nicknameMetadata)
-                                              .where(nicknameMetadata.nickname.eq(nickname))
-                                              .setLockMode(LockModeType.PESSIMISTIC_READ)
-                                              .fetchOne();
+                .where(nicknameMetadata.nickname.eq(nickname))
+                .setLockMode(LockModeType.PESSIMISTIC_READ)
+                .fetchOne();
 
         return Optional.ofNullable(result);
     }
