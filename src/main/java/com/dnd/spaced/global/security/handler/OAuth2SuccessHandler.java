@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
@@ -24,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -57,14 +59,14 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     ) {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = (String) oAuth2User.getAttributes()
-                                          .get(ATTRIBUTE_EMAIL_KEY);
+                .get(ATTRIBUTE_EMAIL_KEY);
 
 
         accountRepository.findBy(email)
-                         .ifPresentOrElse(
-                                 account -> login(response, account, false),
-                                 () -> login(response, signUp(email), true)
-                         );
+                .ifPresentOrElse(
+                        account -> login(response, account, false),
+                        () -> login(response, signUp(email), true)
+                );
 
     }
 
@@ -119,20 +121,20 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String profileImage = profileImageProperties.find();
 
         return nicknameMetadataRepository.findBy(nickname)
-                                         .map(
-                                                 nicknameMetadata -> {
-                                                     nicknameMetadata.addCount();
-                                                     return saveAccount(email, profileImage, nicknameMetadata);
-                                                 }
-                                         )
-                                         .orElseGet(
-                                                 () -> {
-                                                     NicknameMetadata nicknameMetadata = new NicknameMetadata(nickname);
+                .map(
+                        nicknameMetadata -> {
+                            nicknameMetadata.addCount();
+                            return saveAccount(email, profileImage, nicknameMetadata);
+                        }
+                )
+                .orElseGet(
+                        () -> {
+                            NicknameMetadata nicknameMetadata = new NicknameMetadata(nickname);
 
-                                                     nicknameMetadataRepository.save(nicknameMetadata);
-                                                     return saveAccount(email, profileImage, nicknameMetadata);
-                                                 }
-                                         );
+                            nicknameMetadataRepository.save(nicknameMetadata);
+                            return saveAccount(email, profileImage, nicknameMetadata);
+                        }
+                );
     }
 
     private Account saveAccount(String email, String profileImage, NicknameMetadata nicknameMetadata) {
@@ -141,11 +143,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 nicknameMetadata.getCount()
         );
         Account account = Account.builder()
-                                 .email(email)
-                                 .nickname(nickname)
-                                 .roleName(Role.ROLE_USER.name())
-                                 .profileImage(profileImage)
-                                 .build();
+                .email(email)
+                .nickname(nickname)
+                .roleName(Role.ROLE_USER.name())
+                .profileImage(profileImage)
+                .build();
 
         return accountRepository.save(account);
     }

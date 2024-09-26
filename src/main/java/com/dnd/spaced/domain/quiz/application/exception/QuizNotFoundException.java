@@ -5,5 +5,7 @@ import com.dnd.spaced.global.exception.ExceptionCode;
 
 public class QuizNotFoundException extends BaseClientException {
 
-    public QuizNotFoundException() {super(ExceptionCode.QUIZ_NOT_FOUND);}
+    public QuizNotFoundException() {
+        super(ExceptionCode.QUIZ_NOT_FOUND);
+    }
 }

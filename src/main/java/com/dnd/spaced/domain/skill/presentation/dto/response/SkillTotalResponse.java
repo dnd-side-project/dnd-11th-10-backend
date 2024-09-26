@@ -8,6 +8,6 @@ import java.util.Map;
 @Builder
 public record SkillTotalResponse(
         int totalAvgResponse,
-        Map<Category,SkillTotalScoreResponse> skillTotalScoreResponse
+        Map<Category, SkillTotalScoreResponse> skillTotalScoreResponse
 ) {
 }

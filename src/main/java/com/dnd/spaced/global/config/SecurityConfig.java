@@ -57,43 +57,43 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (webSecurity) -> webSecurity.ignoring()
-                                           .requestMatchers(
-                                                   PathRequest.toStaticResources()
-                                                              .atCommonLocations()
-                                           );
+                .requestMatchers(
+                        PathRequest.toStaticResources()
+                                .atCommonLocations()
+                );
     }
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.GET,"/admin/**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/refresh-token").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/comments/popular").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/words/{wordId}/comments").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/images/{name}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/learnings/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/learnings/**").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/words/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .exceptionHandling(handler -> handler
-                    .authenticationEntryPoint(oAuth2AuthenticationEntryPoint())
-                    .accessDeniedHandler(oAuth2AccessDeniedHandler())
-            )
-            .oauth2Login(oauth -> oauth
-                    .authorizationEndpoint(endPoint -> endPoint.baseUri("/login"))
-                    .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService()))
-                    .successHandler(oAuth2SuccessHandler())
-                    .failureHandler(oAuth2AuthenticationFailureHandler())
-            )
-            .addFilterBefore(oAuth2AuthenticationFilter(), OAuth2LoginAuthenticationFilter.class)
-            .addFilterBefore(oAuth2RegistrationValidateFilter(), OAuth2AuthorizationRequestRedirectFilter.class);
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/refresh-token").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/comments/popular").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/words/{wordId}/comments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/images/{name}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/learnings/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/learnings/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/words/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .exceptionHandling(handler -> handler
+                        .authenticationEntryPoint(oAuth2AuthenticationEntryPoint())
+                        .accessDeniedHandler(oAuth2AccessDeniedHandler())
+                )
+                .oauth2Login(oauth -> oauth
+                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/login"))
+                        .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2UserService()))
+                        .successHandler(oAuth2SuccessHandler())
+                        .failureHandler(oAuth2AuthenticationFailureHandler())
+                )
+                .addFilterBefore(oAuth2AuthenticationFilter(), OAuth2LoginAuthenticationFilter.class)
+                .addFilterBefore(oAuth2RegistrationValidateFilter(), OAuth2AuthorizationRequestRedirectFilter.class);
 
         return http.build();
     }

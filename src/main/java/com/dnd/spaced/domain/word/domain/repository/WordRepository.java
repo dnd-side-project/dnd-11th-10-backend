@@ -33,4 +33,5 @@ public interface WordRepository {
     void updateBookmarkCount(Long wordId, int count);
 
     List<Word> searchWords(SearchWordConditionDto searchWordConditionDto);
+
 }

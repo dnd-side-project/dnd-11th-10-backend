@@ -64,8 +64,8 @@ public class Word extends BaseTimeEntity {
 
         this.name = name;
         this.pronunciation = Pronunciation.builder()
-                                          .english(englishPronunciation)
-                                          .build();
+                .english(englishPronunciation)
+                .build();
         this.meaning = meaning;
         this.category = Category.findBy(categoryName);
         this.example = example;

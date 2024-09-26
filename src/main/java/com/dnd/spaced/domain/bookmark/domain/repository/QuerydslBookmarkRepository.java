@@ -9,8 +9,10 @@ import com.dnd.spaced.domain.bookmark.domain.repository.dto.response.BookmarkWor
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -34,11 +36,11 @@ public class QuerydslBookmarkRepository implements BookmarkRepository {
     @Override
     public Optional<Bookmark> findBy(Long accountId, Long wordId) {
         Bookmark result = queryFactory.selectFrom(bookmark)
-                                        .where(
-                                                bookmark.accountId.eq(accountId),
-                                                bookmark.wordId.eq(wordId)
-                                        )
-                                        .fetchOne();
+                .where(
+                        bookmark.accountId.eq(accountId),
+                        bookmark.wordId.eq(wordId)
+                )
+                .fetchOne();
 
         return Optional.ofNullable(result);
     }
@@ -46,25 +48,25 @@ public class QuerydslBookmarkRepository implements BookmarkRepository {
     @Override
     public List<BookmarkWordDto> findAllBy(BookmarkConditionDto dto) {
         return queryFactory.select(
-                                   Projections.constructor(
-                                           BookmarkWordDto.class,
-                                           word.id,
-                                           word.name,
-                                           word.pronunciation,
-                                           word.meaning,
-                                           word.category,
-                                           word.viewCount,
-                                           word.example,
-                                           word.createdAt,
-                                           word.updatedAt,
-                                           bookmark.id
-                                   )
-                           )
-                           .from(word)
-                           .leftJoin(bookmark).on(word.id.eq(bookmark.wordId), bookmark.accountId.eq(dto.accountId()))
-                           .where(lastBookmarkIdLt(dto.lastBookmarkId()))
-                           .orderBy(bookmark.id.desc())
-                           .fetch();
+                        Projections.constructor(
+                                BookmarkWordDto.class,
+                                word.id,
+                                word.name,
+                                word.pronunciation,
+                                word.meaning,
+                                word.category,
+                                word.viewCount,
+                                word.example,
+                                word.createdAt,
+                                word.updatedAt,
+                                bookmark.id
+                        )
+                )
+                .from(word)
+                .leftJoin(bookmark).on(word.id.eq(bookmark.wordId), bookmark.accountId.eq(dto.accountId()))
+                .where(lastBookmarkIdLt(dto.lastBookmarkId()))
+                .orderBy(bookmark.id.desc())
+                .fetch();
     }
 
     private BooleanExpression lastBookmarkIdLt(Long lastBookmarkId) {

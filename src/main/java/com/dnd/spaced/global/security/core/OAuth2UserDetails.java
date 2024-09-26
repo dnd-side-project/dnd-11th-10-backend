@@ -1,8 +1,10 @@
 package com.dnd.spaced.global.security.core;
 
 import com.dnd.spaced.global.security.exception.UnsupportedSecurityOperationException;
+
 import java.util.Collection;
 import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

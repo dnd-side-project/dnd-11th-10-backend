@@ -7,8 +7,10 @@ import com.dnd.spaced.domain.comment.domain.repository.dto.request.FindCommentAl
 import com.dnd.spaced.domain.comment.domain.repository.dto.response.CommentInfoWithLikeDto;
 import com.dnd.spaced.domain.comment.domain.repository.dto.response.PopularCommentInfoDto;
 import com.dnd.spaced.domain.comment.domain.repository.dto.response.PopularCommentWithoutIsLikeDto;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.data.domain.Pageable;
 
 public interface CommentRepository {

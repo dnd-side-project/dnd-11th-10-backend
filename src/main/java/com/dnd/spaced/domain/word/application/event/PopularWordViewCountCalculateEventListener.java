@@ -5,8 +5,10 @@ import com.dnd.spaced.domain.word.application.exception.PopularWordScheduleNotFo
 import com.dnd.spaced.domain.word.domain.PopularWordMetadata;
 import com.dnd.spaced.domain.word.domain.PopularWordSchedule;
 import com.dnd.spaced.domain.word.domain.repository.PopularWordRepository;
+
 import java.time.Clock;
 import java.time.LocalDateTime;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -28,22 +30,22 @@ public class PopularWordViewCountCalculateEventListener {
         LocalDateTime target = LocalDateTime.now(clock);
 
         popularWordRepository.findBy(event.wordId(), target)
-                             .ifPresentOrElse(
-                                     PopularWordMetadata::view,
-                                     () -> {
-                                         PopularWordSchedule schedule = findSchedule(target);
-                                         PopularWordMetadata metadata = PopularWordMetadata.builder()
-                                                                                        .wordId(event.wordId())
-                                                                                        .schedule(schedule)
-                                                                                        .build();
+                .ifPresentOrElse(
+                        PopularWordMetadata::view,
+                        () -> {
+                            PopularWordSchedule schedule = findSchedule(target);
+                            PopularWordMetadata metadata = PopularWordMetadata.builder()
+                                    .wordId(event.wordId())
+                                    .schedule(schedule)
+                                    .build();
 
-                                         popularWordRepository.save(metadata);
-                                     }
-                             );
+                            popularWordRepository.save(metadata);
+                        }
+                );
     }
 
     private PopularWordSchedule findSchedule(LocalDateTime target) {
         return popularWordRepository.findBy(target)
-                                    .orElseThrow(PopularWordScheduleNotFoundException::new);
+                .orElseThrow(PopularWordScheduleNotFoundException::new);
     }
 }

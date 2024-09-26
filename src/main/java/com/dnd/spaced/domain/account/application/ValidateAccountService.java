@@ -14,6 +14,6 @@ public class ValidateAccountService {
 
     public boolean isValidAccount(String email) {
         return accountRepository.findBy(email)
-                                .isPresent();
+                .isPresent();
     }
 }

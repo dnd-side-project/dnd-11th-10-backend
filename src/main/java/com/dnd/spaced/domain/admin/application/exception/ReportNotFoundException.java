@@ -5,5 +5,7 @@ import com.dnd.spaced.global.exception.ExceptionCode;
 
 public class ReportNotFoundException extends BaseClientException {
 
-    public ReportNotFoundException() {super(ExceptionCode.REPORT_NOT_FOUND);}
+    public ReportNotFoundException() {
+        super(ExceptionCode.REPORT_NOT_FOUND);
+    }
 }

@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.image.presentation;
 
 import com.dnd.spaced.domain.image.application.LocalImageService;
+
 import java.net.MalformedURLException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +29,7 @@ public class LocalImageController {
         headers.setContentType(MediaType.IMAGE_PNG);
 
         return ResponseEntity.ok()
-                             .headers(headers)
-                             .body(resource);
+                .headers(headers)
+                .body(resource);
     }
 }

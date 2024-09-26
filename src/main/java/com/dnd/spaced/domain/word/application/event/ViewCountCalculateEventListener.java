@@ -19,4 +19,5 @@ public class ViewCountCalculateEventListener {
     public void listen(FoundWordViewCountEvent event) {
         wordRepository.updateViewCount(event.wordId());
     }
+
 }

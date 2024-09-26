@@ -21,7 +21,7 @@ public class PopularWordSortConditionArgumentResolver implements HandlerMethodAr
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(SearchWordSortCondition.class) && parameter.getParameterType()
-                                                                                           .equals(Pageable.class);
+                .equals(Pageable.class);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class PopularWordSortConditionArgumentResolver implements HandlerMethodAr
             WebDataBinderFactory binderFactory
     ) {
         return PageRequest.of(IGNORED_PAGE, DEFAULT_SIZE)
-                          .withSort(IGNORE_DIRECTION, IGNORE_SORT_BY);
+                .withSort(IGNORE_DIRECTION, IGNORE_SORT_BY);
     }
 }

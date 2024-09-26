@@ -21,7 +21,7 @@ public class BookmarkSortConditionArgumentResolver implements HandlerMethodArgum
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(BookmarkSortCondition.class) && parameter.getParameterType()
-                                                                                         .equals(Pageable.class);
+                .equals(Pageable.class);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class BookmarkSortConditionArgumentResolver implements HandlerMethodArgum
             WebDataBinderFactory binderFactory
     ) {
         return PageRequest.of(IGNORED_PAGE, DEFAULT_SIZE)
-                          .withSort(DEFAULT_DIRECTION, DEFAULT_SORT_BY);
+                .withSort(DEFAULT_DIRECTION, DEFAULT_SORT_BY);
     }
 }

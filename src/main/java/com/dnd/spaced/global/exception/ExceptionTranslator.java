@@ -2,9 +2,11 @@ package com.dnd.spaced.global.exception;
 
 import com.dnd.spaced.global.exception.dto.ExceptionDto;
 import com.dnd.spaced.global.exception.dto.ParameterExceptionDto;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -200,8 +202,7 @@ public enum ExceptionTranslator {
             HttpStatus.NOT_FOUND,
             ExceptionCode.REPORT_NOT_FOUND,
             "해당 신고를 찾을 수 없습니다."
-    )
-    ;
+    );
 
     private static final String PARAMETER_SEPARATOR = ", ";
 
@@ -217,15 +218,15 @@ public enum ExceptionTranslator {
 
     public static ExceptionTranslator find(ExceptionCode code) {
         return Arrays.stream(ExceptionTranslator.values())
-                     .filter(translator -> translator.code == code)
-                     .findAny()
-                     .orElseThrow(() -> new IllegalStateException("정의되지 않은 예외입니다."));
+                .filter(translator -> translator.code == code)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("정의되지 않은 예외입니다."));
     }
 
     public ParameterExceptionDto translate(List<FieldError> errors) {
         String parameters = errors.stream()
-                                  .map(FieldError::getField)
-                                  .collect(Collectors.joining(PARAMETER_SEPARATOR));
+                .map(FieldError::getField)
+                .collect(Collectors.joining(PARAMETER_SEPARATOR));
 
         return new ParameterExceptionDto(this.code.toString(), parameters, this.message);
     }

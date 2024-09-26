@@ -4,7 +4,9 @@ import com.dnd.spaced.domain.word.application.dto.request.SearchWordConditionInf
 import com.dnd.spaced.domain.word.domain.repository.dto.request.SearchWordConditionDto;
 import com.dnd.spaced.domain.word.domain.repository.dto.request.WordConditionDto;
 import com.dnd.spaced.domain.word.domain.repository.dto.response.WordCandidateDto;
+
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Pageable;

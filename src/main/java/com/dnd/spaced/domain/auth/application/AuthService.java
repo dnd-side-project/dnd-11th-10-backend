@@ -11,8 +11,10 @@ import com.dnd.spaced.domain.auth.domain.TokenEncoder;
 import com.dnd.spaced.domain.auth.domain.TokenType;
 import com.dnd.spaced.domain.auth.infrastructure.JwtDecoder;
 import com.dnd.spaced.domain.auth.infrastructure.PrivateClaims;
+
 import java.time.LocalDateTime;
 import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +37,7 @@ public class AuthService {
 
     public TokenDto refreshToken(String refreshToken) {
         PrivateClaims privateClaims = tokenDecoder.decode(TokenType.REFRESH, refreshToken)
-                                                  .orElseThrow(ExpiredTokenException::new);
+                .orElseThrow(ExpiredTokenException::new);
         String generateAccessToken = tokenEncoder.encode(
                 LocalDateTime.now(),
                 TokenType.ACCESS,
@@ -59,6 +61,6 @@ public class AuthService {
 
     private Account findAccount(String email) {
         return accountRepository.findBy(email)
-                                .orElseThrow(ForbiddenAccountException::new);
+                .orElseThrow(ForbiddenAccountException::new);
     }
 }

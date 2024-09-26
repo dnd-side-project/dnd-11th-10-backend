@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.account.domain;
 
 import com.dnd.spaced.domain.account.domain.exception.InvalidExperienceException;
+
 import java.util.Arrays;
+
 import lombok.Getter;
 
 @Getter
@@ -13,8 +15,7 @@ public enum Experience {
     BETWEEN_THIRD_FOURTH("3~4년 차"),
     BETWEEN_FOURTH_FIFTH("4~5년 차"),
     OVER_FIFTH("5년 차 이상"),
-    BLIND("비공개")
-    ;
+    BLIND("비공개");
 
     private final String name;
 
@@ -24,8 +25,8 @@ public enum Experience {
 
     public static Experience find(String name) {
         return Arrays.stream(Experience.values())
-                     .filter(experience -> experience.name.equals(name))
-                     .findAny()
-                     .orElseThrow(InvalidExperienceException::new);
+                .filter(experience -> experience.name.equals(name))
+                .findAny()
+                .orElseThrow(InvalidExperienceException::new);
     }
 }

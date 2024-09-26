@@ -31,6 +31,6 @@ public class AccountService {
 
     private Account findAccount(String email) {
         return accountRepository.findBy(email)
-                                .orElseThrow(AccountUnauthorizedException::new);
+                .orElseThrow(AccountUnauthorizedException::new);
     }
 }

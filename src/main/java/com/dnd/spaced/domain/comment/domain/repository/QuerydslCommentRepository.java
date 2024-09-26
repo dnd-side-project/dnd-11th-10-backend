@@ -17,8 +17,10 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Order;
@@ -84,30 +86,30 @@ public class QuerydslCommentRepository implements CommentRepository {
     @Override
     public List<PopularCommentInfoDto> findPopularAllBy(Pageable pageable, Long accountId) {
         return queryFactory.select(
-                                   Projections.constructor(
-                                           PopularCommentInfoDto.class,
-                                           comment.id,
-                                           word.id,
-                                           word.name,
-                                           word.category,
-                                           word.pronunciation,
-                                           comment.content,
-                                           comment.likeCount,
-                                           comment.createdAt,
-                                           comment.updatedAt,
-                                           like.id
-                                   )
-                           )
-                           .from(comment)
-                           .join(account).on(comment.accountId.eq(account.id))
-                           .join(word).on(comment.wordId.eq(word.id))
-                           .leftJoin(like).on(comment.id.eq(like.commentId), like.accountId.eq(accountId))
-                           .orderBy(
-                                   CommentSortConditionConverter.convert(findOrder(pageable))
-                                                                .toArray(OrderSpecifier[]::new)
-                           )
-                           .limit(pageable.getPageSize())
-                           .fetch();
+                        Projections.constructor(
+                                PopularCommentInfoDto.class,
+                                comment.id,
+                                word.id,
+                                word.name,
+                                word.category,
+                                word.pronunciation,
+                                comment.content,
+                                comment.likeCount,
+                                comment.createdAt,
+                                comment.updatedAt,
+                                like.id
+                        )
+                )
+                .from(comment)
+                .join(account).on(comment.accountId.eq(account.id))
+                .join(word).on(comment.wordId.eq(word.id))
+                .leftJoin(like).on(comment.id.eq(like.commentId), like.accountId.eq(accountId))
+                .orderBy(
+                        CommentSortConditionConverter.convert(findOrder(pageable))
+                                .toArray(OrderSpecifier[]::new)
+                )
+                .limit(pageable.getPageSize())
+                .fetch();
     }
 
     @Override
@@ -150,37 +152,37 @@ public class QuerydslCommentRepository implements CommentRepository {
         }
 
         List<CommentWithLikeDto> result = queryFactory.select(
-                                                              Projections.constructor(
-                                                                      CommentWithLikeDto.class,
-                                                                      like.id,
-                                                                      comment
-                                                              )
-                                                      )
-                                                      .from(like)
-                                                      .join(comment).on(like.commentId.eq(comment.id))
-                                                      .where(
-                                                              account.id.eq(dto.accountId()),
-                                                              lastCommentIdFromLikeLt(dto.lastCommentId())
-                                                      )
-                                                      .orderBy(like.id.desc())
-                                                      .limit(dto.pageable().getPageSize())
-                                                      .fetch();
+                        Projections.constructor(
+                                CommentWithLikeDto.class,
+                                like.id,
+                                comment
+                        )
+                )
+                .from(like)
+                .join(comment).on(like.commentId.eq(comment.id))
+                .where(
+                        account.id.eq(dto.accountId()),
+                        lastCommentIdFromLikeLt(dto.lastCommentId())
+                )
+                .orderBy(like.id.desc())
+                .limit(dto.pageable().getPageSize())
+                .fetch();
 
         return result.stream()
-                     .map(CommentWithLikeDto::comment)
-                     .toList();
+                .map(CommentWithLikeDto::comment)
+                .toList();
     }
 
     @Override
     public List<Comment> findAllByWritten(FindCommentAllByWrittenConditionDto dto) {
         return queryFactory.selectFrom(comment)
-                           .where(
-                                   comment.accountId.eq(dto.accountId()),
-                                   lastCommentIdFromCommentLt(dto.lastCommentId())
-                           )
-                           .orderBy(comment.id.desc())
-                           .limit(dto.pageable().getPageSize())
-                           .fetch();
+                .where(
+                        comment.accountId.eq(dto.accountId()),
+                        lastCommentIdFromCommentLt(dto.lastCommentId())
+                )
+                .orderBy(comment.id.desc())
+                .limit(dto.pageable().getPageSize())
+                .fetch();
     }
 
     private BooleanExpression calculateFindAllBooleanExpression(CommentConditionDto dto) {
@@ -210,9 +212,9 @@ public class QuerydslCommentRepository implements CommentRepository {
 
     private BooleanExpression calculateLastCommentAfterFirstPaginationBooleanExpression(CommentConditionDto dto) {
         return comment.likeCount.lt(dto.lastLikeCount())
-                                .or(comment.likeCount.eq(dto.lastLikeCount())
-                                                     .and(lastCommentIdFromCommentLt(dto.lastCommentId()))
-                                );
+                .or(comment.likeCount.eq(dto.lastLikeCount())
+                        .and(lastCommentIdFromCommentLt(dto.lastCommentId()))
+                );
     }
 
     private BooleanExpression calculateLastCommentFirstPaginationBooleanExpression(
@@ -252,8 +254,8 @@ public class QuerydslCommentRepository implements CommentRepository {
 
     private Order findOrder(Pageable pageable) {
         return pageable.getSort()
-                       .get()
-                       .findAny()
-                       .orElse(null);
+                .get()
+                .findAny()
+                .orElse(null);
     }
 }

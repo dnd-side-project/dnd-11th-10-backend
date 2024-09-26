@@ -9,6 +9,7 @@ import com.dnd.spaced.domain.word.application.dto.response.WordSearchInfoDto;
 import com.dnd.spaced.domain.word.presentation.dto.response.*;
 
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -42,4 +43,5 @@ public final class WordControllerMapper {
     public static SimpleListWordInfoResponse toSimpleResponse(List<ListWordInfoDto> dtos) {
         return SimpleListWordInfoResponse.from(dtos);
     }
+
 }

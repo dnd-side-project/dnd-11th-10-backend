@@ -1,7 +1,9 @@
 package com.dnd.spaced.domain.word.domain;
 
 import com.dnd.spaced.domain.word.domain.exception.InvalidCategoryException;
+
 import java.util.Arrays;
+
 import lombok.Getter;
 
 @Getter
@@ -16,8 +18,8 @@ public enum Category {
 
     public static Category findBy(String name) {
         return Arrays.stream(Category.values())
-                     .filter(category -> category.name.equals(name))
-                     .findAny()
-                     .orElseThrow(InvalidCategoryException::new);
+                .filter(category -> category.name.equals(name))
+                .findAny()
+                .orElseThrow(InvalidCategoryException::new);
     }
 }

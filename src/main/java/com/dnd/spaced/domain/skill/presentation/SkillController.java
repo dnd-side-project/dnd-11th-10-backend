@@ -31,7 +31,7 @@ public class SkillController implements SwaggerSkillController {
     }
 
     @GetMapping("/precedence")
-    public ResponseEntity<Long> getPrecedence(@AuthAccount AuthAccountInfo info){
+    public ResponseEntity<Long> getPrecedence(@AuthAccount AuthAccountInfo info) {
         return ResponseEntity.ok(skillService.getTotalMyScore(info));
     }
 }

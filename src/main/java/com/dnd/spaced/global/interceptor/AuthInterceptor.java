@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Authentication authentication = SecurityContextHolder.getContext()
-                                                             .getAuthentication();
+                .getAuthentication();
 
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             store.set(new AuthAccountInfo(null));

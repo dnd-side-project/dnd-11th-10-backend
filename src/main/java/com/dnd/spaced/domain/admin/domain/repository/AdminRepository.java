@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface AdminRepository {
     List<Word> findAllBy(AdminWordConditionDto adminWordConditionDto);
-
 }

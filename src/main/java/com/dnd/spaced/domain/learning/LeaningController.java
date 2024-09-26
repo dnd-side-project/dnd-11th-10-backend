@@ -6,10 +6,12 @@ import com.dnd.spaced.domain.learning.dto.response.TestExplanationResponse.Expla
 import com.dnd.spaced.domain.learning.dto.response.TestProblemResponse;
 import com.dnd.spaced.domain.learning.dto.response.TestProblemResponse.ProblemInfoResponse;
 import com.dnd.spaced.domain.learning.dto.response.TestProblemResponse.ProblemInfoResponse.OptionInfoResponse;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -93,12 +95,12 @@ public class LeaningController {
         ExplanationInfoResponse explanation1 = new ExplanationInfoResponse(answers[0], requestAnswer.get(0).equals(answers[0]), requestAnswer.get(0).equals(answers[0]), "아젠다(Agenda)", options.get(requestAnswer.get(0)), options.get(answers[0]));
         ExplanationInfoResponse explanation2 = new ExplanationInfoResponse(answers[1], requestAnswer.get(1).equals(answers[1]), requestAnswer.get(1).equals(answers[1]), "목 데이터(Mock Data)", options.get(requestAnswer.get(1)), options.get(answers[1]));
         ExplanationInfoResponse explanation3 = new ExplanationInfoResponse(answers[2], requestAnswer.get(2).equals(answers[2]), requestAnswer.get(2).equals(answers[2]), "스크럼(Scrum)", options.get(requestAnswer.get(2)), options.get(answers[2]));
-        ExplanationInfoResponse explanation4 = new ExplanationInfoResponse(answers[3], requestAnswer.get(3).equals(answers[3]), requestAnswer.get(3).equals(answers[3]),"넛지(Nudge)", options.get(requestAnswer.get(3)), options.get(answers[3]));
-        ExplanationInfoResponse explanation5 = new ExplanationInfoResponse(answers[4], requestAnswer.get(4).equals(answers[4]), requestAnswer.get(4).equals(answers[4]),"가시화(Visualization)", options.get(requestAnswer.get(4)), options.get(answers[4]));
+        ExplanationInfoResponse explanation4 = new ExplanationInfoResponse(answers[3], requestAnswer.get(3).equals(answers[3]), requestAnswer.get(3).equals(answers[3]), "넛지(Nudge)", options.get(requestAnswer.get(3)), options.get(answers[3]));
+        ExplanationInfoResponse explanation5 = new ExplanationInfoResponse(answers[4], requestAnswer.get(4).equals(answers[4]), requestAnswer.get(4).equals(answers[4]), "가시화(Visualization)", options.get(requestAnswer.get(4)), options.get(answers[4]));
 
         long correctCount = IntStream.range(0, Math.min(requestAnswer.size(), answers.length))
-                                     .filter(i -> answers[i].equals(requestAnswer.get(i)))
-                                     .count();
+                .filter(i -> answers[i].equals(requestAnswer.get(i)))
+                .count();
 
         TestExplanationResponse testExplanationResponse = new TestExplanationResponse(id, correctCount, List.of(explanation1, explanation2, explanation3, explanation4, explanation5));
 
