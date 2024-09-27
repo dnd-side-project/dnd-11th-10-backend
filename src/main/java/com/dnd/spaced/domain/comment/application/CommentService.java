@@ -80,7 +80,7 @@ public class CommentService {
         Account writer = findAccount(dto.email());
         Comment comment = findComment(dto.commentId());
 
-        if (comment.isOwner(writer.getId())) {
+        if (!comment.isOwner(writer.getId())) {
             throw new ForbiddenDeleteCommentException();
         }
 
