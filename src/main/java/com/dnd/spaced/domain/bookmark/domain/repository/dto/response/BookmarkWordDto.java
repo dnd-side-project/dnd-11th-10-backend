@@ -15,6 +15,7 @@ public record BookmarkWordDto(
         String example,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
+        int commentCount,
         Long bookmarkId
 ) {
 }

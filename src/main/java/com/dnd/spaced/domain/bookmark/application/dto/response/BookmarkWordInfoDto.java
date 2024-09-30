@@ -14,6 +14,7 @@ public record BookmarkWordInfoDto(
         String example,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
+        int commentCount,
         Long bookmarkId
 ) {
 
@@ -28,6 +29,7 @@ public record BookmarkWordInfoDto(
                 dto.example(),
                 dto.createdAt(),
                 dto.updatedAt(),
+                dto.commentCount(),
                 dto.bookmarkId()
         );
     }

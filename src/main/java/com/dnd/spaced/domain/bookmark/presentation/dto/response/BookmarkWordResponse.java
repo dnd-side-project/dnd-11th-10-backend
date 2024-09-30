@@ -30,6 +30,7 @@ public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long la
             String example,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
+            int commentCount,
             Long bookmarkId
     ) {
 
@@ -44,6 +45,7 @@ public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long la
                     dto.example(),
                     dto.createdAt(),
                     dto.updatedAt(),
+                    dto.commentCount(),
                     dto.bookmarkId()
             );
         }
