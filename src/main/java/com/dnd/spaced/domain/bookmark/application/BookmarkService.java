@@ -63,6 +63,7 @@ public class BookmarkService {
         Account account = findAccount(dto.email());
         BookmarkConditionDto bookmarkConditionDto = BookmarkRepositoryMapper.of(
                 account.getId(),
+                dto.category(),
                 dto.lastBookmarkId(),
                 dto.pageable()
         );
