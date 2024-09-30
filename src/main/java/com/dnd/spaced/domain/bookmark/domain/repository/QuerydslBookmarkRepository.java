@@ -59,6 +59,7 @@ public class QuerydslBookmarkRepository implements BookmarkRepository {
                                 word.example,
                                 word.createdAt,
                                 word.updatedAt,
+                                word.commentCount,
                                 bookmark.id
                         )
                 )
