@@ -6,6 +6,8 @@ import static com.dnd.spaced.domain.word.domain.QWord.word;
 import com.dnd.spaced.domain.bookmark.domain.Bookmark;
 import com.dnd.spaced.domain.bookmark.domain.repository.dto.request.BookmarkConditionDto;
 import com.dnd.spaced.domain.bookmark.domain.repository.dto.response.BookmarkWordDto;
+import com.dnd.spaced.domain.word.domain.Category;
+import com.dnd.spaced.domain.word.domain.exception.InvalidCategoryException;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class QuerydslBookmarkRepository implements BookmarkRepository {
+
+    private static final String IGNORE_CATEGORY = "전체 실무";
 
     private final JPAQueryFactory queryFactory;
     private final BookmarkCrudRepository bookmarkCrudRepository;
@@ -66,7 +70,12 @@ public class QuerydslBookmarkRepository implements BookmarkRepository {
                 .from(word)
                 .leftJoin(bookmark).on(word.id.eq(bookmark.wordId), bookmark.accountId.eq(dto.accountId()))
                 .where(lastBookmarkIdLt(dto.lastBookmarkId()))
+                .where(
+                        categoryEq(dto.category()),
+                        lastBookmarkIdLt(dto.lastBookmarkId())
+                )
                 .orderBy(bookmark.id.desc())
+                .limit(dto.pageable().getPageSize())
                 .fetch();
     }
 
@@ -76,5 +85,19 @@ public class QuerydslBookmarkRepository implements BookmarkRepository {
         }
 
         return bookmark.id.lt(lastBookmarkId);
+    }
+
+    private BooleanExpression categoryEq(String category) {
+        if (category == null || IGNORE_CATEGORY.equals(category)) {
+            return null;
+        }
+
+        try {
+            Category categoryEnum = Category.findBy(category);
+
+            return word.category.eq(categoryEnum);
+        } catch (InvalidCategoryException e) {
+            return null;
+        }
     }
 }

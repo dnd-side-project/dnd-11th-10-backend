@@ -30,6 +30,7 @@ public interface SwaggerBookmarkController {
 
     @Operation(summary = "북마크한 용어 목록 조회", description = "북마크한 용어 목록 조회 API")
     @Parameters({
+            @Parameter(name = "category", description = "용어 카테고리", schema = @Schema(defaultValue = "전체 실무", allowableValues = {"전체 실무", "비즈니스", "개발", "디자인"}, requiredMode = RequiredMode.NOT_REQUIRED)),
             @Parameter(name = "lastBookmarkId", description = "마지막으로 조회한 북마크 ID", schema = @Schema(requiredMode = RequiredMode.NOT_REQUIRED)),
             @Parameter(name = "size", description = "한 페이지에 조회 가능한 용어 개수", schema = @Schema(defaultValue = "15", requiredMode = RequiredMode.NOT_REQUIRED)),
             @Parameter(name = "sortBy", description = "정렬 기준(등록순 고정)", schema = @Schema(defaultValue = "id", allowableValues = "id", requiredMode = RequiredMode.NOT_REQUIRED))

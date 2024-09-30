@@ -1,12 +1,19 @@
 package com.dnd.spaced.domain.bookmark.presentation.dto.response;
 
 import com.dnd.spaced.domain.bookmark.application.dto.response.BookmarkWordInfoDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-public record BookmarkWordResponse(List<BookmarkWordInfoResponse> words, Long lastBookmarkId) {
+public record BookmarkWordResponse(
+
+        @Schema(description = "용어 정보")
+        List<BookmarkWordInfoResponse> words,
+
+        @Schema(description = "마지막으로 조회한 용어 이름", nullable = true)
+        Long lastBookmarkId) {
 
     public static BookmarkWordResponse from(List<BookmarkWordInfoDto> dtos) {
         if (dtos.isEmpty()) {
