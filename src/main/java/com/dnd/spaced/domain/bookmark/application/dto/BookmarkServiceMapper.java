@@ -17,7 +17,7 @@ public class BookmarkServiceMapper {
                     .toList();
     }
 
-    public static BookmarkConditionInfoDto of(String email, Long lastBookmarkId, Pageable pageable) {
-        return new BookmarkConditionInfoDto(email, lastBookmarkId, pageable);
+    public static BookmarkConditionInfoDto of(String email, String category, Long lastBookmarkId, Pageable pageable) {
+        return new BookmarkConditionInfoDto(email, category, lastBookmarkId, pageable);
     }
 }

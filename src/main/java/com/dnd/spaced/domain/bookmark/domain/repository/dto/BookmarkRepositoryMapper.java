@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BookmarkRepositoryMapper {
 
-    public static BookmarkConditionDto of(Long accountId, Long lastBookmarkId, Pageable pageable) {
-        return new BookmarkConditionDto(accountId, lastBookmarkId, pageable);
+    public static BookmarkConditionDto of(Long accountId, String category, Long lastBookmarkId, Pageable pageable) {
+        return new BookmarkConditionDto(accountId, category, lastBookmarkId, pageable);
     }
 }

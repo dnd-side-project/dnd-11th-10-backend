@@ -43,6 +43,7 @@ public class BookmarkController implements SwaggerBookmarkController {
     ) {
         BookmarkConditionInfoDto dto = BookmarkServiceMapper.of(
                 accountInfo.email(),
+                request.category(),
                 request.lastBookmarkId(),
                 pageable
         );
