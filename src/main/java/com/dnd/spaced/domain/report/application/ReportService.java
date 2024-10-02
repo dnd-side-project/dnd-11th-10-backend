@@ -23,7 +23,7 @@ public class ReportService {
         Account reporter = accountRepository.findBy(dto.email())
                 .orElseThrow(ForbiddenReportAccountException::new);
 
-        if (commentRepository.existsBy(dto.commentId())) {
+        if (!commentRepository.existsBy(dto.commentId())) {
             throw new ReportedCommentNotFoundException();
         }
 
