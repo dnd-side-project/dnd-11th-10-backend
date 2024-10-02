@@ -45,5 +45,4 @@ public class QuerydslReportRepository implements ReportRepository {
                 .limit(size)
                 .fetch();
     }
-
 }
