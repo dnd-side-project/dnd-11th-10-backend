@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record AccountInfoResponse(
 
+        @Schema(description = "이메일")
+        String email,
+
         @Schema(description = "닉네임")
         String nickname,
 
@@ -28,7 +31,7 @@ public record AccountInfoResponse(
                 dto.developQuizCount()
         );
 
-        return new AccountInfoResponse(dto.nickname(), profileImage, careerInfo, quizInfo);
+        return new AccountInfoResponse(dto.email(), dto.nickname(), profileImage, careerInfo, quizInfo);
     }
 
     private record CareerInfoResponse(

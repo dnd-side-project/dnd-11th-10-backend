@@ -5,6 +5,7 @@ import com.dnd.spaced.domain.account.domain.CareerInfo;
 import com.dnd.spaced.domain.account.domain.QuizInfo;
 
 public record ReadAccountInfoDto(
+        String email,
         String nickname,
         String profileImage,
         String company,
@@ -21,6 +22,7 @@ public record ReadAccountInfoDto(
         QuizInfo quizInfo = account.getQuizInfo();
 
         return new ReadAccountInfoDto(
+                account.getEmail(),
                 account.getNickname(),
                 account.getProfileImage(),
                 careerInfo.getCompany().getName(),
