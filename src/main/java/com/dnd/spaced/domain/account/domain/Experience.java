@@ -15,6 +15,7 @@ public enum Experience {
     BETWEEN_THIRD_FOURTH("3~4년 차"),
     BETWEEN_FOURTH_FIFTH("4~5년 차"),
     OVER_FIFTH("5년 차 이상"),
+    JOBSEEKER_INTERN("취준생/인턴"),
     BLIND("비공개");
 
     private final String name;
