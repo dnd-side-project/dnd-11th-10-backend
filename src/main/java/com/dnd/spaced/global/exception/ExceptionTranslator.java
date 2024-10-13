@@ -206,7 +206,7 @@ public enum ExceptionTranslator {
     CANDIDATE_NOT_FOUND_EXCEPTION(
             HttpStatus.NOT_FOUND,
             ExceptionCode.CANDIDATE_NOT_FOUND,
-            "해당 단어를 포함한 용어가 없습니다."
+            "일치하는 용어 이름 검색어 후보군이 없습니다."
     );
 
     private static final String PARAMETER_SEPARATOR = ", ";
