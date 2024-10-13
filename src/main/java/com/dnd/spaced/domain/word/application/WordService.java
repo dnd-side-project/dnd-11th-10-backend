@@ -12,6 +12,7 @@ import com.dnd.spaced.domain.word.application.dto.response.PopularWordInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.WordSearchInfoDto;
 import com.dnd.spaced.domain.word.application.event.dto.request.FoundWordPopularViewCountEvent;
 import com.dnd.spaced.domain.word.application.event.dto.request.FoundWordViewCountEvent;
+import com.dnd.spaced.domain.word.application.exception.CandidatesNotFoundException;
 import com.dnd.spaced.domain.word.application.exception.WordNotFoundException;
 import com.dnd.spaced.domain.word.domain.Word;
 import com.dnd.spaced.domain.word.domain.repository.PopularWordRepository;
@@ -78,8 +79,11 @@ public class WordService {
     }
 
     public InputWordCandidateDto findCandidateAllBy(String target) {
-        WordCandidateDto result = wordRepository.findCandidateAllBy(target);
+        if (target == null || target.trim().isEmpty()) {
+            throw new CandidatesNotFoundException();
+        }
 
+        WordCandidateDto result = wordRepository.findCandidateAllBy(target);
         return WordServiceMapper.from(result);
     }
 
