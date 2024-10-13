@@ -58,7 +58,8 @@ public class Word extends BaseTimeEntity {
             String englishPronunciation,
             String meaning,
             String categoryName,
-            String example
+            String example,
+            String resource
     ) {
         validateContent(name, meaning, example);
 
@@ -69,6 +70,7 @@ public class Word extends BaseTimeEntity {
         this.meaning = meaning;
         this.category = Category.findBy(categoryName);
         this.example = example;
+        this.resource = resource;
     }
 
     public void addComment() {
