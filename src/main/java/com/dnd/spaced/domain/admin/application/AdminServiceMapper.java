@@ -37,6 +37,7 @@ public class AdminServiceMapper {
                 .meaning(dto.meaning())
                 .categoryName(Category.findBy(dto.category()).getName())
                 .example(dto.example())
+                .resource(dto.resource())
                 .build();
     }
 
