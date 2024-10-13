@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -67,7 +68,7 @@ public class WordController implements SwaggerWordController {
     }
 
     @GetMapping("/candidates")
-    public ResponseEntity<InputWordCandidateResponse> findCandidateAllBy(String name) {
+    public ResponseEntity<InputWordCandidateResponse> findCandidateAllBy(@RequestBody String name) {
         InputWordCandidateDto result = wordService.findCandidateAllBy(name);
 
         return ResponseEntity.ok(WordControllerMapper.to(result));
