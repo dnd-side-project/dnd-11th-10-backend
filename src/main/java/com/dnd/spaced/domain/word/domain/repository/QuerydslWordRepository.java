@@ -112,7 +112,7 @@ public class QuerydslWordRepository implements WordRepository {
     public WordCandidateDto findCandidateAllBy(String target) {
         List<String> result = queryFactory.select(word.name)
                 .from(word)
-                .where(word.name.endsWith(target))
+                .where(word.name.contains(target))
                 .fetch();
 
         return WordRepositoryMapper.to(result);
