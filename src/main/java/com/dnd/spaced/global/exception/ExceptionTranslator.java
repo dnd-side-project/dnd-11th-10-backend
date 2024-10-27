@@ -202,6 +202,11 @@ public enum ExceptionTranslator {
             HttpStatus.NOT_FOUND,
             ExceptionCode.REPORT_NOT_FOUND,
             "해당 신고를 찾을 수 없습니다."
+    ),
+    CANDIDATE_NOT_FOUND_EXCEPTION(
+            HttpStatus.NOT_FOUND,
+            ExceptionCode.CANDIDATE_NOT_FOUND,
+            "일치하는 용어 이름 검색어 후보군이 없습니다."
     );
 
     private static final String PARAMETER_SEPARATOR = ", ";
