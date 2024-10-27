@@ -83,9 +83,13 @@ public class SkillService {
                 .mapToLong(this::calculateTotalScore)
                 .sum();
 
+        if (userTotalScore == 0) {
+            return 100L;
+        }
+
         Long averagePeopleScore = calculateAveragePeopleScore();
 
-        return (averagePeopleScore == 0) ? 0 : (userTotalScore * 100) / averagePeopleScore;
+        return (averagePeopleScore == 0) ? 100 : (userTotalScore * 100) / averagePeopleScore;
     }
 
     /**
