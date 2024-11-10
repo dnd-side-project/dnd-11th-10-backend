@@ -70,6 +70,14 @@ public class QuerydslPopularWordMetadataRepository implements PopularWordReposit
     }
 
     @Override
+    public List<Word> findByViewCount(Pageable pageable) {
+        return queryFactory.selectFrom(word)
+                .orderBy(word.viewCount.desc())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    @Override
     public Optional<PopularWordMetadata> findBy(Long wordId, LocalDateTime target) {
         PopularWordMetadata result = queryFactory.selectFrom(popularWordMetadata)
                 .where(popularWordMetadata.wordId.eq(wordId),
