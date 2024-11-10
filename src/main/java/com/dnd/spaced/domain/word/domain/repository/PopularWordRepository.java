@@ -16,6 +16,8 @@ public interface PopularWordRepository {
 
     List<Word> findAllBy(LocalDateTime target, Pageable pageable);
 
+    List<Word> findByViewCount(Pageable pageable);
+
     Optional<PopularWordMetadata> findBy(Long wordId, LocalDateTime target);
 
     Optional<PopularWordSchedule> findBy(LocalDateTime target);
