@@ -94,7 +94,7 @@ public class WordService {
     }
 
     public List<PopularWordInfoDto> findPopularAll(Pageable pageable) {
-        List<Word> result = popularWordRepository.findAllBy(LocalDateTime.now(clock), pageable);
+        List<Word> result = popularWordRepository.findByViewCount(pageable);
 
         return WordServiceMapper.from(result);
     }
