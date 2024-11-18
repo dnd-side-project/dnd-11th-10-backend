@@ -49,9 +49,18 @@ public class SkillService {
      * @return 카테고리별 스킬 점수 응답
      */
     public SkillTotalResponse getSkillTotalScore(AuthAccountInfo info) {
-        List<Skill> skills = skillRepository.findByEmail(info.email());
         Map<Category, SkillTotalScoreResponse> response = new HashMap<>();
+        for (Category category : Category.values()) {
+            if (category != Category.ALL) {
+                response.put(category, SkillTotalScoreResponse.builder()
+                        .totalScore(0L)
+                        .currentCount(0L)
+                        .totalCount(5L)
+                        .build());
+            }
+        }
 
+        List<Skill> skills = skillRepository.findByEmail(info.email());
         int sum = 0;
 
         for (Skill skill : skills) {
@@ -60,14 +69,12 @@ public class SkillService {
             response.put(skill.getCategory(), createSkillTotalScoreResponse(skill, totalCount));
         }
 
-        sum /= 3;
+        sum = skills.isEmpty() ? 0 : sum / 3;
 
-        SkillTotalResponse totalResponse = SkillTotalResponse.builder()
+        return SkillTotalResponse.builder()
                 .totalAvgResponse(sum)
                 .skillTotalScoreResponse(response)
                 .build();
-
-        return totalResponse;
     }
 
     /**
