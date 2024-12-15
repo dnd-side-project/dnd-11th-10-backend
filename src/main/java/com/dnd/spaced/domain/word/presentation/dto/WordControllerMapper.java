@@ -1,17 +1,20 @@
 package com.dnd.spaced.domain.word.presentation.dto;
 
+import com.dnd.spaced.domain.word.application.dto.request.SearchWordConditionInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.DetailWordInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.InputWordCandidateDto;
 import com.dnd.spaced.domain.word.application.dto.response.MultipleWordInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.ListWordInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.PopularWordInfoDto;
 import com.dnd.spaced.domain.word.application.dto.response.WordSearchInfoDto;
+import com.dnd.spaced.domain.word.presentation.dto.request.WordSearchRequest;
 import com.dnd.spaced.domain.word.presentation.dto.response.*;
 
 import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Pageable;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class WordControllerMapper {
@@ -42,6 +45,16 @@ public final class WordControllerMapper {
 
     public static SimpleListWordInfoResponse toSimpleResponse(List<ListWordInfoDto> dtos) {
         return SimpleListWordInfoResponse.from(dtos);
+    }
+
+    public static SearchWordConditionInfoDto of(WordSearchRequest request, Pageable pageable) {
+        return new SearchWordConditionInfoDto(
+                request.name(),
+                request.pronunciation(),
+                request.lastWordName(),
+                request.category(),
+                pageable
+        );
     }
 
 }
