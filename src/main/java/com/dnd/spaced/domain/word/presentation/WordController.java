@@ -79,7 +79,7 @@ public class WordController implements SwaggerWordController {
             WordSearchRequest request,
             @SearchWordSortCondition Pageable pageable
     ) {
-        List<WordSearchInfoDto> result = wordService.search(WordControllerMapper.of(request, pageable));
+        List<WordSearchInfoDto> result = wordService.search(WordServiceMapper.of(request, pageable));
 
         return ResponseEntity.ok(WordControllerMapper.toResponse(result));
     }
